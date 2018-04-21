@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPoints : MonoBehaviour
+public class Game : MonoBehaviour
 {
 
 	public GameObject[] checkPoints;
+
+	public bool runSimulation = true;
 	
 	// Use this for initialization
 	void Start () {
