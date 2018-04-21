@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +9,8 @@ using Random = UnityEngine.Random;
 
 public class CarAgent : MonoBehaviour
 {
-	public GameObject checkPoints;
+	public GameObject GameObj;
+	private Game game;
 	public int checkPoint;
 
 	private Vector3 lastAgentVelocity;
@@ -22,7 +24,7 @@ public class CarAgent : MonoBehaviour
 	void Start () {
 		
 		var agent = GetComponent<NavMeshAgent>();
-		var game = checkPoints.GetComponent<Game>();
+		game = GameObj.GetComponent<Game>();
 		var target = game.checkPoints[checkPoint];
 		
 		agent.SetDestination(target.transform.position);
@@ -32,16 +34,14 @@ public class CarAgent : MonoBehaviour
 	void Update () {
 		var agent = GetComponent<NavMeshAgent>();
 		
-		var game = checkPoints.GetComponent<Game>();
-
 		if (playerControlled)
 		{
-			UpdatePlayerInput(agent, game);
+			UpdatePlayerInput(agent);
 		}
 		if (game.runSimulation)
 		{
 			resume();
-			UpdateSimulation(agent, game);
+			UpdateSimulation(agent);
 		}
 		else
 		{
@@ -49,7 +49,7 @@ public class CarAgent : MonoBehaviour
 		}
 	}
 
-	private void UpdatePlayerInput(NavMeshAgent agent, Game game)
+	private void UpdatePlayerInput(NavMeshAgent agent)
 	{
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
@@ -126,7 +126,7 @@ public class CarAgent : MonoBehaviour
 		}		
 	}
 
-	private void  UpdateSimulation(NavMeshAgent agent, Game game)
+	private void  UpdateSimulation(NavMeshAgent agent)
 	{
 		var deltaSpeed = (float) Random.Range(-1, 2);
 		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 7, 13);
@@ -176,6 +176,24 @@ public class CarAgent : MonoBehaviour
 			{
 				agent.speed = 7;
 			}
+		}
+
+		var ray = new Ray(agent.transform.position, agent.transform.up * -1);
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit))
+		{
+			//agent.transform.LookAt(agent.transform.position + agent.velocity);
+
+			agent.transform.rotation = Quaternion.LookRotation(agent.desiredVelocity, hit.normal);
+			
+			//agent.transform.up = hit.normal;
+			//var forward = new Vector3(euler.x, agent.transform.eulerAngles.y, euler.z);
+
+			//agent.transform.Rotate(forward);
+			
+			//agent.transform.eulerAngles = forward;
+
+			Debug.DrawLine(hit.point, hit.point + hit.normal * 10, Color.yellow);
 		}
 	}
 
