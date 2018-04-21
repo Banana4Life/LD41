@@ -633,8 +633,6 @@ MonoBehaviour:
   - {fileID: 782230484}
   - {fileID: 291544767}
   runSimulation: 1
-  camX: -5
-  camY: 4
 --- !u!4 &935333696
 Transform:
   m_ObjectHideFlags: 0
@@ -1021,7 +1019,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

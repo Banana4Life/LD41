@@ -34,6 +34,10 @@ public class CarAgent : MonoBehaviour
 		
 		var game = checkPoints.GetComponent<Game>();
 
+		if (playerControlled)
+		{
+			UpdatePlayerInput(agent, game);
+		}
 		if (game.runSimulation)
 		{
 			resume();
@@ -44,7 +48,29 @@ public class CarAgent : MonoBehaviour
 			pause();
 		}
 	}
-	
+
+	private void UpdatePlayerInput(NavMeshAgent agent, Game game)
+	{
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit))
+		{
+			var point = hit.point;
+			
+			if (Input.GetMouseButtonUp(0))
+			{
+				agent.ResetPath();
+				agent.SetDestination(point);
+				game.runSimulation = true;
+			}
+			Debug.DrawLine(agent.transform.position, point, Color.black);
+			Debug.DrawLine(agent.destination, transform.position, Color.red);
+
+		}
+		
+
+	}
+
 	void pause() 
 	{
 		
@@ -71,11 +97,14 @@ public class CarAgent : MonoBehaviour
 			var agent = GetComponent<NavMeshAgent>();
 		
 			agent.velocity = lastAgentVelocity;
-			agent.SetPath(lastAgentPath);
+			if (!playerControlled)
+			{
+				agent.SetPath(lastAgentPath);
+			}
 		}		
 	}
 
-	private void UpdateSimulation(NavMeshAgent agent, Game game)
+	private void  UpdateSimulation(NavMeshAgent agent, Game game)
 	{
 		var deltaSpeed = (float) Random.Range(-1, 2);
 		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 7, 13);
@@ -85,25 +114,17 @@ public class CarAgent : MonoBehaviour
 			Camera.main.transform.parent.transform.position = transform.position;
 			Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
 			
-			if (Input.GetMouseButtonUp(0))
-			{
-				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				RaycastHit hit;
-				if (Physics.Raycast(ray, out hit))
-				{
-					var point = hit.point;
-					agent.ResetPath();
-					agent.SetDestination(point);
-				
-				}	
-			}
 			
-			Debug.DrawLine(agent.destination, new Vector3(agent.destination.x, agent.destination.y + 20, agent.destination.z));
+			if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
+			{
+				Debug.Log("Stopping");
+				game.runSimulation = false;
+			}
 			 
 		}
 		else
 		{
-			if (DidAgentReachDestination(agent))
+			if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, agent.stoppingDistance))
 			{
 				agent.ResetPath();
 				checkPoint++;
@@ -130,9 +151,11 @@ public class CarAgent : MonoBehaviour
 		}
 	}
 
-	public static bool DidAgentReachDestination(NavMeshAgent agent)
+	public static bool DidAgentReachDestination(Vector3 pos, Vector3 dest, float targetDistance)
 	{
-		var distance = Vector3.Distance(agent.gameObject.transform.position, agent.destination);
-		return distance <= agent.stoppingDistance;
+		var distance = Vector3.SqrMagnitude(pos - dest);
+		Debug.Log(pos + " " + dest);
+		Debug.Log(distance);
+		return distance <= targetDistance * targetDistance;
 	}
 }
