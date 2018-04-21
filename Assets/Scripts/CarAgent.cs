@@ -55,7 +55,7 @@ public class CarAgent : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit))
 		{
-			var point = hit.point;
+			var point = hit.point + hit.normal / 10f;
 			
 			if (!game.runSimulation && Input.GetMouseButtonUp(0))
 			{
@@ -70,7 +70,7 @@ public class CarAgent : MonoBehaviour
 			}
 			foreach (var v3 in game.queued)
 			{
-				var next = new Vector3(v3.x, agent.transform.position.y, v3.z);
+				var next = new Vector3(v3.x, v3.y, v3.z);
 				Debug.DrawLine(next, last, Color.red);
 				last = next;
 			}
@@ -182,8 +182,6 @@ public class CarAgent : MonoBehaviour
 	public static bool DidAgentReachDestination(Vector3 pos, Vector3 dest, float targetDistance)
 	{
 		var distance = Vector3.SqrMagnitude(pos - dest);
-		Debug.Log(pos + " " + dest);
-		Debug.Log(distance);
 		return distance <= targetDistance * targetDistance;
 	}
 }
