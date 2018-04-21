@@ -14,7 +14,9 @@ public class CarAgent : MonoBehaviour
 	private Vector3 lastAgentVelocity;
 	private NavMeshPath lastAgentPath;
 
-	private bool paused = false;
+	private bool paused;
+
+	public bool playerControlled;
 
 	// Use this for initialization
 	void Start () {
@@ -78,20 +80,46 @@ public class CarAgent : MonoBehaviour
 		var deltaSpeed = (float) Random.Range(-1, 2);
 		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 7, 13);
 
-		if (DidAgentReachDestination(agent))
+		if (playerControlled)
 		{
-			agent.ResetPath();
-			checkPoint++;
-			if (checkPoint >= game.checkPoints.Length)
+			Camera.main.transform.parent.transform.position = transform.position;
+			Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
+			
+			if (Input.GetMouseButtonUp(0))
 			{
-				checkPoint = 0;
+				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				if (Physics.Raycast(ray, out hit))
+				{
+					var point = hit.point;
+					agent.ResetPath();
+					agent.SetDestination(point);
+				
+				}	
 			}
-
-			var target = game.checkPoints[checkPoint];
-
-			agent.SetDestination(target.transform.position);
+			
+			Debug.DrawLine(agent.destination, new Vector3(agent.destination.x, agent.destination.y + 20, agent.destination.z));
+			 
 		}
+		else
+		{
+			if (DidAgentReachDestination(agent))
+			{
+				agent.ResetPath();
+				checkPoint++;
+				if (checkPoint >= game.checkPoints.Length)
+				{
+					checkPoint = 0;
+				}
 
+				var target = game.checkPoints[checkPoint];
+
+				agent.SetDestination(target.transform.position);
+			}
+	
+		}
+		
+		
 		NavMeshHit navMeshHit;
 		if (agent.FindClosestEdge(out navMeshHit))
 		{
