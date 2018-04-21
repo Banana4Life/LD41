@@ -6,6 +6,8 @@ public class Game : MonoBehaviour
 {
 
 	public GameObject[] checkPoints;
+	
+	public Queue<Vector3> queued = new Queue<Vector3>();
 
 	public bool runSimulation = true;
 

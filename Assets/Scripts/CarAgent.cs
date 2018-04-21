@@ -57,15 +57,37 @@ public class CarAgent : MonoBehaviour
 		{
 			var point = hit.point;
 			
-			if (Input.GetMouseButtonUp(0))
+			if (!game.runSimulation && Input.GetMouseButtonUp(0))
+			{
+				game.queued.Enqueue(point);
+			}
+
+			Vector3 last = transform.position;
+			if (!agent.isStopped)
+			{
+				Debug.DrawLine(agent.destination, last, Color.cyan);
+				last = agent.destination;
+			}
+			foreach (var v3 in game.queued)
+			{
+				var next = new Vector3(v3.x, agent.transform.position.y, v3.z);
+				Debug.DrawLine(next, last, Color.red);
+				last = next;
+			}
+
+			Debug.DrawLine(agent.transform.position, point, Color.black);
+
+		}
+		
+		if (Input.GetAxis("Submit") > 0)
+		{
+			game.runSimulation = true;
+				
+			if (agent.isStopped)
 			{
 				agent.ResetPath();
-				agent.SetDestination(point);
-				game.runSimulation = true;
+				agent.SetDestination(game.queued.Dequeue());	
 			}
-			Debug.DrawLine(agent.transform.position, point, Color.black);
-			Debug.DrawLine(agent.destination, transform.position, Color.red);
-
 		}
 		
 
@@ -117,8 +139,14 @@ public class CarAgent : MonoBehaviour
 			
 			if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
 			{
-				Debug.Log("Stopping");
-				game.runSimulation = false;
+				if (game.queued.Count > 0)
+				{
+					agent.SetDestination(game.queued.Dequeue());
+				}
+				else
+				{
+					game.runSimulation = false;
+				}
 			}
 			 
 		}
