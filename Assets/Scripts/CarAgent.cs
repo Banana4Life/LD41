@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -26,8 +27,10 @@ public class CarAgent : MonoBehaviour
 		var agent = GetComponent<NavMeshAgent>();
 		game = GameObj.GetComponent<Game>();
 		var target = game.checkPoints[checkPoint];
-		
-		agent.SetDestination(target.transform.position);
+		if (!playerControlled)
+		{
+			agent.SetDestination(target.transform.position);
+		}
 	}
 	
 	// Update is called once per frame
@@ -59,6 +62,8 @@ public class CarAgent : MonoBehaviour
 			
 			if (!game.runSimulation && Input.GetMouseButtonUp(0))
 			{
+				var total = GetPathLength(agent, game.queued);
+				Debug.LogWarning("Path cost: " + total);
 				game.queued.Enqueue(point);
 			}
 
@@ -81,8 +86,14 @@ public class CarAgent : MonoBehaviour
 		
 		if (Input.GetAxis("Submit") > 0)
 		{
+			if (game.queued.Count == 0)
+			{
+				return;
+			}
+			
 			game.runSimulation = true;
 				
+			
 			if (agent.isStopped)
 			{
 				agent.ResetPath();
@@ -178,23 +189,69 @@ public class CarAgent : MonoBehaviour
 			}
 		}
 
-		var ray = new Ray(agent.transform.position, agent.transform.up * -1);
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit))
+		/*
+		if (game.runSimulation)
 		{
-			//agent.transform.LookAt(agent.transform.position + agent.velocity);
+			var ray = new Ray(agent.transform.position, agent.transform.up * -1);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				//agent.transform.LookAt(agent.transform.position + agent.velocity);
+		
+				agent.transform.rotation = Quaternion.LookRotation(lastAgentVelocity, hit.normal);
+				lastAgentVelocity = agent.velocity;
+				//agent.transform.up = hit.normal;
+				//var forward = new Vector3(euler.x, agent.transform.eulerAngles.y, euler.z);
 
-			agent.transform.rotation = Quaternion.LookRotation(agent.desiredVelocity, hit.normal);
+				//agent.transform.Rotate(forward);
 			
-			//agent.transform.up = hit.normal;
-			//var forward = new Vector3(euler.x, agent.transform.eulerAngles.y, euler.z);
+				//agent.transform.eulerAngles = forward;
 
-			//agent.transform.Rotate(forward);
-			
-			//agent.transform.eulerAngles = forward;
-
-			Debug.DrawLine(hit.point, hit.point + hit.normal * 10, Color.yellow);
+				Debug.DrawLine(hit.point, hit.point + hit.normal * 10, Color.yellow);
+			}	
 		}
+		*/
+		
+		
+	}
+
+	private static float GetPathLength(NavMeshAgent agent, IEnumerable<Vector3> plannedPath)
+	{
+		float length;
+		Vector3 last;
+		if (agent.hasPath)
+		{
+			length = GetPathLength(agent.path, agent.transform.position);
+			last = agent.destination;
+		}
+		else
+		{
+			length = 0f;
+			last = agent.transform.position;
+		}
+		
+		var path = new NavMeshPath();
+		foreach (var pos in plannedPath)
+		{
+			NavMesh.CalculatePath(last, pos, NavMesh.AllAreas, path);
+			length += GetPathLength(path, last);
+			last = pos;
+		}
+
+		return length;
+	}
+
+	private static float GetPathLength(NavMeshPath path, Vector3 from)
+	{
+		var length = 0f;
+		var lastCorner = from;
+		foreach (var corner in path.corners)
+		{
+			length += (corner - lastCorner).magnitude;
+			lastCorner = corner;
+		}
+		path.ClearCorners();
+		return length;
 	}
 
 	public static bool DidAgentReachDestination(Vector3 pos, Vector3 dest, float targetDistance)
