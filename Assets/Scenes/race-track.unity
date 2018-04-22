@@ -1403,6 +1403,8 @@ MonoBehaviour:
   splineVelocity: []
   ghostCar: {fileID: 744072210}
   placing: []
+  maxSpeed: 30
+  overDriveSpeed: 50
 --- !u!4 &461391270
 Transform:
   m_ObjectHideFlags: 0
