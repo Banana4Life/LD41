@@ -11,6 +11,8 @@ public class Game : MonoBehaviour
 
 	public float knockBack = 30;
 
+	public float maxCost = 150;
+
 	public GameObject[] checkPoints;
 	
 	public LinkedList<Vector3> queued = new LinkedList<Vector3>();

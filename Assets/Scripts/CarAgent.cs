@@ -137,7 +137,7 @@ public class CarAgent : MonoBehaviour
                     game.queued.AddLast(point);
                     var total = GetPathLength(agent, game.queued);
 
-                    if (total > 50 && !game.testing)
+                    if (total > game.maxCost && !game.testing)
                     {
                         Debug.LogWarning("Path cost: " + total);
                         game.queued.RemoveLast();
