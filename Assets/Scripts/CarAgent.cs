@@ -197,7 +197,6 @@ public class CarAgent : MonoBehaviour
 
 
         var mf = game.trailmesh.GetComponent<MeshFilter>();
-        mf.mesh = meshy;
         meshy.vertices = verts.ToArray();
         meshy.triangles = triangles.ToArray();
         var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
@@ -207,9 +206,10 @@ public class CarAgent : MonoBehaviour
         }
         else
         {
+            ps.Clear();
             ps.Stop();
         }
-
+        mf.mesh = meshy;
 
         // GhostCar
         if (!game.runSimulation && game.queued.Count > 1)
