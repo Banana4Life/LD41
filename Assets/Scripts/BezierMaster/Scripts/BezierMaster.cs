@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public enum Using
 {
@@ -422,7 +424,6 @@ public class BezierMaster : MonoBehaviour
 
 
     }
-#endif
 
     /// <summary>
     /// Return array of points positions along curve.
@@ -448,6 +449,7 @@ public class BezierMaster : MonoBehaviour
 
         return path;
     }
+#endif
     
 
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,13 @@ public class Game : MonoBehaviour
 
 	void Awake()
 	{
-		checkPoints = CheckpointTrack.GetComponent<BezierMaster>().instantiatedObjects;
+		var wrapper = CheckpointTrack.GetComponent<BezierSpline>().transform;
+		
+		checkPoints = new GameObject[wrapper.childCount];
+		var i = 0;
+		foreach (Transform t in wrapper)
+		{
+			checkPoints[i++] = t.gameObject;
+		}
 	}
 }
