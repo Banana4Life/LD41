@@ -43,12 +43,15 @@ public class CarAgent : MonoBehaviour
         {
             UpdatePlayerInput();
             UpdatePlayerCam();
+            game.ghostCar.active = true;
+            DrawPlayerPath();
         }
 
         if (game.runSimulation)
         {
             resume();
             UpdateSimulation();
+            game.ghostCar.active = false;
         }
         else
         {
@@ -62,7 +65,7 @@ public class CarAgent : MonoBehaviour
         {
             Camera.main.transform.localPosition = game.camOffset1;
             Camera.main.transform.localEulerAngles = game.camRot1;
-            
+
             Camera.main.transform.parent.transform.position = transform.position;
             Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
         }
@@ -104,9 +107,6 @@ public class CarAgent : MonoBehaviour
 
     private void UpdatePlayerInput()
     {
-        var meshy = new Mesh();
-        List<Vector3> verts = new List<Vector3>();
-        List<int> triangles = new List<int>();
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -116,70 +116,40 @@ public class CarAgent : MonoBehaviour
             lastYPos = game.queued.Last.Value.y - 1;
         }
 
-        if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
-        {
-            var point = hit.point + hit.normal / 10f;
 
-            if (hit.point.y > lastYPos)
+        if (!game.runSimulation)
+        {
+            if (Input.GetMouseButtonUp(0))
             {
-                var ray2 = new Ray(hit.point + Vector3.down / 50, ray.direction);
-                if (Physics.Raycast(ray2, out hit, 1 << 8))
+                if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
                 {
+                    var point = hit.point + hit.normal / 10f;
+
                     if (hit.point.y > lastYPos)
                     {
-                        point = hit.point;
+                        var ray2 = new Ray(hit.point + Vector3.down / 50, ray.direction);
+                        if (Physics.Raycast(ray2, out hit, 1 << 8) && hit.point.y > lastYPos)
+                        {
+                            point = hit.point;
+                        }
                     }
-                }
-            }
 
-            if (!game.runSimulation)
-            {
-                if (Input.GetMouseButtonUp(0))
-                {
                     game.queued.AddLast(point);
                     var total = GetPathLength(agent, game.queued);
 
-                    if (total > 50)
+                    if (total > 50 && !game.testing)
                     {
-                        if (!game.testing)
-                        {
-                            Debug.LogWarning("Path cost: " + total);
-                            game.queued.RemoveLast();
-                        }
+                        Debug.LogWarning("Path cost: " + total);
+                        game.queued.RemoveLast();
                     }
                 }
-                else if (Input.GetMouseButtonUp(1))
-                {
-                    game.queued.RemoveLast();
-                }
-
-               
             }
-
-            Debug.DrawLine(agent.transform.position, point, Color.black);
+            else if (Input.GetMouseButtonUp(1))
+            {
+                game.queued.RemoveLast();
+            }
         }
 
-        Vector3 last = transform.position;
-        if (!agent.isStopped)
-        {
-            Debug.DrawLine(agent.destination, last, Color.cyan);
-            last = agent.destination;
-        }
-
-        foreach (var v3 in game.queued)
-        {
-            var next = new Vector3(v3.x, v3.y, v3.z);
-
-            drawArc(last, next, verts, triangles);
-            Debug.DrawLine(next, last, Color.red);
-            last = next;
-        }
-
-
-        var mf = game.trailmesh.GetComponent<MeshFilter>();
-        mf.mesh = meshy;
-        meshy.vertices = verts.ToArray();
-        meshy.triangles = triangles.ToArray();
 
         if (Input.GetAxis("Submit") > 0)
         {
@@ -201,6 +171,38 @@ public class CarAgent : MonoBehaviour
         }
 
 
+       
+    }
+
+    private void DrawPlayerPath()
+    {
+        var meshy = new Mesh();
+        List<Vector3> verts = new List<Vector3>();
+        List<int> triangles = new List<int>();
+        Vector3 last = transform.position;
+        if (!agent.isStopped)
+        {
+            Debug.DrawLine(agent.destination, last, Color.cyan);
+            last = agent.destination;
+        }
+
+        foreach (var v3 in game.queued)
+        {
+            var next = new Vector3(v3.x, v3.y, v3.z);
+
+            drawArc(last, next, verts, triangles);
+            Debug.DrawLine(next, last, Color.red);
+            last = next;
+        }
+
+
+        var mf = game.trailmesh.GetComponent<MeshFilter>();
+        mf.mesh = meshy;
+        meshy.vertices = verts.ToArray();
+        meshy.triangles = triangles.ToArray();
+        
+       
+        // GhostCar
         if (!game.runSimulation && game.queued.Count != 0)
         {
             var lastPoint = game.queued.Last;
@@ -274,18 +276,18 @@ public class CarAgent : MonoBehaviour
         }
     }
 
-	private void OnTriggerEnter(Collider other)
-	{
-		var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
-		otherAgent.velocity = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 30;
-	}
-    void pause() 
-	{
-		
-		if (paused)
-		{
-			return;
-		}
+    private void OnTriggerEnter(Collider other)
+    {
+        var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
+        otherAgent.velocity = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 30;
+    }
+
+    void pause()
+    {
+        if (paused)
+        {
+            return;
+        }
 
         paused = true;
 
@@ -319,7 +321,6 @@ public class CarAgent : MonoBehaviour
 
         if (playerControlled)
         {
-
             if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
             {
                 if (game.queued.Count > 0)
