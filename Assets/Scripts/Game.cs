@@ -99,6 +99,6 @@ public class Game : MonoBehaviour
 			}
 		}
 
-		return mindex;
+		return 500 - mindex;
 	}
 }
