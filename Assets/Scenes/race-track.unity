@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 68772386}
   - component: {fileID: 68772385}
   - component: {fileID: 68772384}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SplineCheckpointTrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

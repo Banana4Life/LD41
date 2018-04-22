@@ -132,14 +132,15 @@ public class CarAgent : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
+                var trackMask = LayerMask.GetMask("Track");
+                if (Physics.Raycast(ray, out hit, trackMask)) // Only hit Track
                 {
                     var point = hit.point + hit.normal / 10f;
 
                     if (hit.point.y > lastYPos)
                     {
                         var ray2 = new Ray(hit.point + Vector3.down / 50, ray.direction);
-                        if (Physics.Raycast(ray2, out hit, 1 << 8) && hit.point.y > lastYPos)
+                        if (Physics.Raycast(ray2, out hit, trackMask) && hit.point.y > lastYPos)
                         {
                             point = hit.point;
                         }
@@ -268,7 +269,7 @@ public class CarAgent : MonoBehaviour
 
         var magnitude = (last - next).magnitude;
         var f = 1f / (magnitude * 10f);
-        for (var l = 0f; l <= 1.2; l += f)
+        for (var l = 0f; l <= 1; l += f)
         {
             var nextP = SampleParabola(last, next, 4, l);
             //Debug.DrawLine(lastP, nextP, Color.magenta);
