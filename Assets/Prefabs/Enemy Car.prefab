@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 54636051613713816}
   m_Layer: 9
   m_Name: Enemy Car
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,8 +54,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
-  m_LocalRotation: {x: -0, y: -0.8950769, z: -0, w: -0.44591203}
-  m_LocalPosition: {x: -166.48378, y: -2.8, z: -125.874}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -198.16, y: -2.7, z: -169.52998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
