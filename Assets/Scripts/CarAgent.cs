@@ -12,6 +12,7 @@ public class CarAgent : MonoBehaviour
 {
 	public GameObject GameObj;
 	private Game game;
+	private NavMeshAgent agent;
 	public int checkPoint;
 
 	private Vector3 lastAgentVelocity;
@@ -22,17 +23,20 @@ public class CarAgent : MonoBehaviour
 	public bool playerControlled;
 
 	// Use this for initialization
-	void Start () {
-		
-		var agent = GetComponent<NavMeshAgent>();
+	void Awake() {
+		agent = GetComponent<NavMeshAgent>();
 		game = GameObj.GetComponent<Game>();
+	}
+
+	void Start()
+	{
 		var target = game.checkPoints[checkPoint];
 		if (!playerControlled)
 		{
 			agent.SetDestination(target.transform.position);
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		var agent = GetComponent<NavMeshAgent>();
