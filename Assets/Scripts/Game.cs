@@ -50,6 +50,8 @@ public class Game : MonoBehaviour
 			checkPoints[i++] = t.gameObject;
 		}
 
+		checkPoints = checkPoints.Reverse().ToArray();
+		
 		GetPath(RaceTrack.GetComponent<BezierSpline>(), 500);
 	}
 	
