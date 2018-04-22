@@ -38,7 +38,9 @@ public class Game : MonoBehaviour
 	public GameObject ghostCar;
 
 	public List<CarAgent> placing;
-	
+	public int maxSpeed = 30;
+	public int overDriveSpeed = 50;
+
 	void Awake()
 	{
 		var wrapper = CheckpointTrack.GetComponent<BezierSpline>().transform;

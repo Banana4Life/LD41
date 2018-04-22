@@ -24,7 +24,10 @@ public class CarAgent : MonoBehaviour
     private float delta = 0f;
     public int Round = 0;
     public float placePoints;
+    
     private int maxSpeed = 30;
+
+    private float overDrive = 0f;
 
     // Use this for initialization
     void Awake()
@@ -44,6 +47,12 @@ public class CarAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        overDrive -= Time.deltaTime;
+        if (overDrive < 0)
+        {
+            agent.acceleration = 35f;
+            maxSpeed = game.maxSpeed;
+        }
         if (playerControlled)
         {
             UpdatePlayerInput();
@@ -349,7 +358,10 @@ public class CarAgent : MonoBehaviour
 
             if (other.CompareTag("Pickup"))
             {
-                agent.speed = maxSpeed;
+                maxSpeed = game.overDriveSpeed;
+                agent.speed = game.overDriveSpeed;
+                agent.acceleration = 55f;
+                overDrive = 5f;
                 Debug.Log("PickUp! " + gameObject.name);
             }
         }
@@ -410,7 +422,7 @@ public class CarAgent : MonoBehaviour
 
         if (playerControlled)
         {
-            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
+            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f))
             {
                 if (game.queued.Count > 0)
                 {
@@ -466,7 +478,7 @@ public class CarAgent : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        var deltaSpeed = Random.Range(-1f, 1f); // Biased on purpose
+        var deltaSpeed = Random.Range(-1.1f, 1f); // Biased on purpose
         agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, maxSpeed);
 
         var deltaPlacePoints = game.placing.First().placePoints - placePoints;
