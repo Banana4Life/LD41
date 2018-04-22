@@ -54,8 +54,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -198.16, y: -2.7, z: -169.52998}
+  m_LocalRotation: {x: -0, y: -0.8950769, z: -0, w: -0.44591203}
+  m_LocalPosition: {x: -166.48378, y: -2.8, z: -125.874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObj: {fileID: 0}
-  checkPoint: 8
+  checkPoint: 4
   playerControlled: 0
 --- !u!136 &136511913581143956
 CapsuleCollider:
@@ -159,7 +159,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.4193497
   m_Height: 3.565813
@@ -174,9 +174,9 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.42
-  m_Speed: 10
+  m_Speed: 20.400002
   m_Acceleration: 35
-  avoidancePriority: 50
+  avoidancePriority: 0
   m_AngularSpeed: 200
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
