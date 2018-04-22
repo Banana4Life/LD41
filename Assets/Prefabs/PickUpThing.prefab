@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4283980093643170}
-  - component: {fileID: 114512097284320480}
   - component: {fileID: 65821484383052892}
   m_Layer: 19
   m_Name: PickUpThing
@@ -38,7 +37,6 @@ GameObject:
   - component: {fileID: 4630949952986870}
   - component: {fileID: 198922707853042150}
   - component: {fileID: 199443641644869916}
-  - component: {fileID: 114906461432912908}
   m_Layer: 19
   m_Name: Cloud
   m_TagString: Untagged
@@ -116,28 +114,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5130615, y: 1.9747066, z: 1.3419876}
   m_Center: {x: -0.63874817, y: 1.5126467, z: -0.45186996}
---- !u!114 &114512097284320480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1635380341323046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114906461432912908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666750498045884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &198190050110965394
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -198,7 +174,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -797602484
+  randomSeed: 240915965
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3604,7 +3580,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1598843330
+  randomSeed: -2065968449
   InitialModule:
     serializedVersion: 3
     enabled: 1
