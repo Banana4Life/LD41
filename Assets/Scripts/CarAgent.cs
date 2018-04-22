@@ -156,11 +156,11 @@ public class CarAgent : MonoBehaviour
 		for (var l = 0f; l <= 1.2; l += 0.1f)
 		{
 			var nextP = SampleParabola(last, next, 4, l);
-			Debug.DrawLine(lastP, nextP, Color.magenta);
+			//Debug.DrawLine(lastP, nextP, Color.magenta);
 			lastP = nextP;
 					
-			verts.Add(nextP + Vector3.left);
-			verts.Add(nextP + Vector3.right);
+			verts.Add(nextP + Vector3.left / 20);
+			verts.Add(nextP + Vector3.right / 20);
 			var i = verts.Count;
 			if (i > 2)
 			{
@@ -239,7 +239,7 @@ public class CarAgent : MonoBehaviour
 	private void UpdateSimulation(NavMeshAgent agent)
 	{
 		var deltaSpeed = (float) Random.Range(-1, 2);
-		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 7, 13);
+		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
 
 		if (playerControlled)
 		{

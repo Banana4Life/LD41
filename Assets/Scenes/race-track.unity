@@ -5575,6 +5575,11 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!4 &266435385 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1845557577}
 --- !u!1 &291544767
 GameObject:
   m_ObjectHideFlags: 0
@@ -19404,7 +19409,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.97
   m_Speed: 10
-  m_Acceleration: 17
+  m_Acceleration: 35
   avoidancePriority: 50
   m_AngularSpeed: 200
   m_StoppingDistance: 2
@@ -19672,7 +19677,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 266435385}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25712,6 +25718,67 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1001 &1845557577
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1536643318}
+    m_Modifications:
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714636422705604, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067826889541738, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+      propertyPath: m_Name
+      value: Particle System (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 198407776523791664, guid: 60ae637b6b5ca4b8aa806474df1c51c5,
+        type: 2}
+      propertyPath: ShapeModule.m_MeshRenderer
+      value: 
+      objectReference: {fileID: 1536643320}
+    - target: {fileID: 198407776523791664, guid: 60ae637b6b5ca4b8aa806474df1c51c5,
+        type: 2}
+      propertyPath: ShapeModule.placementMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198407776523791664, guid: 60ae637b6b5ca4b8aa806474df1c51c5,
+        type: 2}
+      propertyPath: randomSeed
+      value: -409067731
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 60ae637b6b5ca4b8aa806474df1c51c5, type: 2}
+  m_IsPrefabParent: 0
 --- !u!43 &1889568854
 Mesh:
   m_ObjectHideFlags: 0
