@@ -78,7 +78,7 @@ public class Game : MonoBehaviour
 		//placing = placing.OrderBy(ag => pathIndex(ag.transform.position) + splinePath.Length * ag.Round).ToList();
 		placing = placing.OrderBy(ag =>
 		{
-			var placePoints = ag.Round * splinePath.Length + pathIndex(ag.transform.position);
+			var placePoints = ag.Round * checkPoints.Length + ag.checkPoint + pathIndex(ag.transform.position) / 1000f;
 			ag.placePoints = placePoints;
 			return placePoints;
 		}).Reverse().ToList();

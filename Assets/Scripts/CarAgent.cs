@@ -23,7 +23,7 @@ public class CarAgent : MonoBehaviour
 
     private float delta = 0f;
     public int Round = 0;
-    public int placePoints;
+    public float placePoints;
 
     // Use this for initialization
     void Awake()
