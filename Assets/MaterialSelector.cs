@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
 public class MaterialSelector : MonoBehaviour {
@@ -11,8 +8,6 @@ public class MaterialSelector : MonoBehaviour {
 
 	void Start () {
 		var selection = Materials[Random.Range(0, Materials.Length)];
-		Debug.LogWarning("Selection:");
-		Debug.LogWarning(selection);
 		Renderer target;
 		if (RendererInChildren)
 		{
