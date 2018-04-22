@@ -75,9 +75,9 @@ public class CarAgent : MonoBehaviour
             Camera.main.transform.localEulerAngles = game.camRot2;
 
             var camPoint = transform.position;
-            if (game.queued.Count > 1)
+            if (game.queued.Count > 0)
             {
-                camPoint = game.queued.Last.Previous.Value;
+                camPoint = game.queued.Last.Value;
             }
 
             var offset = game.RaceTrack.transform.position;
