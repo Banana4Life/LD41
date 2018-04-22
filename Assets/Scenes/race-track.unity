@@ -1282,33 +1282,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114524781155033436, guid: aead0c3c0be0d403a8de5181d39ca7b1,
         type: 2}
-      propertyPath: checkPoints
+      propertyPath: GameObj
       value: 
       objectReference: {fileID: 461391268}
     - target: {fileID: 1260338589884670, guid: aead0c3c0be0d403a8de5181d39ca7b1, type: 2}
       propertyPath: m_Name
       value: Enemy Car (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 195773345252769564, guid: aead0c3c0be0d403a8de5181d39ca7b1,
-        type: 2}
-      propertyPath: m_Speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 195773345252769564, guid: aead0c3c0be0d403a8de5181d39ca7b1,
-        type: 2}
-      propertyPath: m_AngularSpeed
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 195773345252769564, guid: aead0c3c0be0d403a8de5181d39ca7b1,
-        type: 2}
-      propertyPath: m_Acceleration
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 114524781155033436, guid: aead0c3c0be0d403a8de5181d39ca7b1,
-        type: 2}
-      propertyPath: GameObj
-      value: 
-      objectReference: {fileID: 461391268}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aead0c3c0be0d403a8de5181d39ca7b1, type: 2}
   m_IsPrefabParent: 0
@@ -2415,6 +2395,7 @@ MonoBehaviour:
   targetPoint: {x: 0, y: 0, z: 0}
   playerControlled: 1
   Round: 0
+  placePoints: 0
 --- !u!54 &1429272493
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -193, y: -3, z: -173}
+  m_LocalPosition: {x: -193, y: -3, z: -164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
@@ -154,6 +154,7 @@ MonoBehaviour:
   targetPoint: {x: 0, y: 0, z: 0}
   playerControlled: 0
   Round: 0
+  placePoints: 0
 --- !u!136 &136511913581143956
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -176,7 +177,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.42
-  m_Speed: 20.400002
+  m_Speed: 10
   m_Acceleration: 35
   avoidancePriority: 0
   m_AngularSpeed: 200

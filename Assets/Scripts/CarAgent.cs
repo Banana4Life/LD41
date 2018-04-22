@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -457,11 +458,11 @@ public class CarAgent : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        var deltaSpeed = Random.Range(-1.5f, 1f);
+        var deltaSpeed = Random.Range(-1f, 1f); // Biased on purpose
         agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
 
-        var deltePlacePoints = game.placing.First().placePoints - placePoints;
-        agent.speed = deltePlacePoints / 1500 + agent.speed;
+        var deltaPlacePoints = game.placing.First().placePoints - placePoints;
+        agent.speed = Math.Max(0, deltaPlacePoints - 100) / 1000f + agent.speed;
 
     }
 
