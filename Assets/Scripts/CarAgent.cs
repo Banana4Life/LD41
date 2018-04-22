@@ -24,6 +24,7 @@ public class CarAgent : MonoBehaviour
     private float delta = 0f;
     public int Round = 0;
     public float placePoints;
+    private int maxSpeed = 30;
 
     // Use this for initialization
     void Awake()
@@ -345,6 +346,12 @@ public class CarAgent : MonoBehaviour
                 }
                 NextCheckpoint();
             }
+
+            if (other.CompareTag("Pickup"))
+            {
+                agent.speed = maxSpeed;
+                Debug.Log("PickUp! " + gameObject.name);
+            }
         }
 
     }
@@ -460,7 +467,7 @@ public class CarAgent : MonoBehaviour
     private void UpdateSpeed()
     {
         var deltaSpeed = Random.Range(-1f, 1f); // Biased on purpose
-        agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
+        agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, maxSpeed);
 
         var deltaPlacePoints = game.placing.First().placePoints - placePoints;
         agent.speed = Math.Max(0, deltaPlacePoints - 100) / 1000f + agent.speed;
