@@ -19,6 +19,8 @@ public class Game : MonoBehaviour
 	public Vector3 camOffset2 = new Vector3(0,5,-4);
 	public Vector3 camRot2 = new Vector3(30,0,0);
 
+	public GameObject trailmesh;
+
 	void Awake()
 	{
 		checkPoints = CheckpointTrack.GetComponent<BezierMaster>().instantiatedObjects;

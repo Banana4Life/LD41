@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -21,6 +23,8 @@ public class CarAgent : MonoBehaviour
 	private bool paused;
 
 	public bool playerControlled;
+
+	private float delta = 0f;
 
 	// Use this for initialization
 	void Awake() {
@@ -69,6 +73,10 @@ public class CarAgent : MonoBehaviour
 
 	private void UpdatePlayerInput(NavMeshAgent agent)
 	{
+		var meshy = new Mesh();
+		List<Vector3> verts = new List<Vector3>();
+		List<int> triangles = new List<int>();
+		
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
@@ -90,22 +98,31 @@ public class CarAgent : MonoBehaviour
 				
 			}
 
-			Vector3 last = transform.position;
-			if (!agent.isStopped)
-			{
-				Debug.DrawLine(agent.destination, last, Color.cyan);
-				last = agent.destination;
-			}
-			foreach (var v3 in game.queued)
-			{
-				var next = new Vector3(v3.x, v3.y, v3.z);
-				Debug.DrawLine(next, last, Color.red);
-				last = next;
-			}
-
 			Debug.DrawLine(agent.transform.position, point, Color.black);
 
 		}
+		
+		Vector3 last = transform.position;
+		if (!agent.isStopped)
+		{
+			Debug.DrawLine(agent.destination, last, Color.cyan);
+			last = agent.destination;
+		}
+
+		foreach (var v3 in game.queued)
+		{
+			var next = new Vector3(v3.x, v3.y, v3.z);
+
+			drawArc(last, next, verts, triangles);
+			Debug.DrawLine(next, last, Color.red);
+			last = next;
+		}
+		
+		
+		var mf = game.trailmesh.GetComponent<MeshFilter>();
+		mf.mesh = meshy;
+		meshy.vertices = verts.ToArray();
+		meshy.triangles = triangles.ToArray();
 		
 		if (Input.GetAxis("Submit") > 0)
 		{
@@ -126,7 +143,64 @@ public class CarAgent : MonoBehaviour
 			}
 		}
 		
+		
+		
+		
 
+	}
+
+	private void drawArc(Vector3 last, Vector3 next, List<Vector3> verts, List<int> triangles)
+	{
+		var lastP = last;
+
+		for (var l = 0f; l <= 1.2; l += 0.1f)
+		{
+			var nextP = SampleParabola(last, next, 4, l);
+			Debug.DrawLine(lastP, nextP, Color.magenta);
+			lastP = nextP;
+					
+			verts.Add(nextP + Vector3.left);
+			verts.Add(nextP + Vector3.right);
+			var i = verts.Count;
+			if (i > 2)
+			{
+				triangles.Add(i-4);
+				triangles.Add(i-3);
+				triangles.Add(i-2);
+				
+				triangles.Add(i-1);
+				triangles.Add(i-2);
+				triangles.Add(i-3);
+
+				triangles.Add(i-2);
+				triangles.Add(i-3);
+				triangles.Add(i-4);
+
+				triangles.Add(i-3);
+				triangles.Add(i-2);
+				triangles.Add(i-1);
+			}
+		}
+	}
+	
+	Vector3 SampleParabola ( Vector3 start, Vector3 end, float height, float pCent ) {
+		if ( Mathf.Abs( start.y - end.y ) < 0.1f ) {
+			//start and end are roughly level, pretend they are - simpler solution with less steps
+			Vector3 travelDirection = end - start;
+			Vector3 result = start + pCent * travelDirection;
+			result.y += Mathf.Sin( pCent * Mathf.PI ) * height;
+			return result;
+		} else {
+			//start and end are not level, gets more complicated
+			Vector3 travelDirection = end - start;
+			Vector3 levelDirecteion = end - new Vector3( start.x, end.y, start.z );
+			Vector3 right = Vector3.Cross( travelDirection, levelDirecteion );
+			Vector3 up = Vector3.Cross( right, travelDirection );
+			if ( end.y > start.y ) up = -up;
+			Vector3 result = start + pCent * travelDirection;
+			result += ( Mathf.Sin( pCent * Mathf.PI ) * height ) * up.normalized;
+			return result;
+		}
 	}
 
 	void pause() 
