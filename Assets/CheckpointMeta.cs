@@ -9,6 +9,7 @@ public class CheckpointMeta : MonoBehaviour
 	public Game game;
 	public CarAgent player;
 	private Text text;
+	public float HeightOffset = 5f;
 
 	private string baseText;
 
@@ -20,6 +21,13 @@ public class CheckpointMeta : MonoBehaviour
 
 	void Update ()
 	{
+		var gameCheckPoint = game.checkPoints[player.checkPoint];
+		var center = gameCheckPoint.GetComponentInChildren<Renderer>().bounds.center;
+
+		text.gameObject.transform.position = center + Vector3.up * HeightOffset;
+		text.gameObject.transform.eulerAngles = gameCheckPoint.transform.eulerAngles;
+
+
 		var playerPlacing = 0;
 		for (var i = 0; i < game.placing.Count; i++)
 		{
