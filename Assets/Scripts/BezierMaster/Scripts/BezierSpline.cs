@@ -33,6 +33,11 @@ public class BezierSpline : MonoBehaviour
     private bool loop;
     private const int lenghtResolution = 10;
 
+    public Vector3[] getPoints()
+    {
+        return points;
+    }
+
     public bool Loop
     {
         get

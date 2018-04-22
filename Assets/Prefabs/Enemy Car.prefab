@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 114524781155033436}
   - component: {fileID: 195773345252769564}
   - component: {fileID: 136511913581143956}
+  - component: {fileID: 54636051613713816}
   m_Layer: 9
   m_Name: Enemy Car
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -93.72, y: 7.7, z: -145.48}
+  m_LocalPosition: {x: -193, y: -3, z: -164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
@@ -122,6 +123,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1699540232145994}
   m_Mesh: {fileID: 4300000, guid: 3160e4b4020e845409372a7f9a7aef2c, type: 3}
+--- !u!54 &54636051613713816
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260338589884670}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114524781155033436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,7 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameObj: {fileID: 0}
   checkPoint: 0
+  targetPoint: {x: 0, y: 0, z: 0}
   playerControlled: 0
+  Round: 0
+  placePoints: 0
 --- !u!136 &136511913581143956
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -143,7 +162,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.4193497
   m_Height: 3.565813
@@ -159,8 +178,8 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.42
   m_Speed: 10
-  m_Acceleration: 17
-  avoidancePriority: 50
+  m_Acceleration: 35
+  avoidancePriority: 0
   m_AngularSpeed: 200
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1

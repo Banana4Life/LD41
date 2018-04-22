@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -15,8 +17,8 @@ TagManager:
   - 
   - Track
   - Vehicle
-  - 
-  - 
+  - Checkpoint
+  - Pickup
   - 
   - 
   - 
