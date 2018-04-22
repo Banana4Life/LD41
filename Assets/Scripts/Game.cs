@@ -9,6 +9,8 @@ public class Game : MonoBehaviour
 	public GameObject CheckpointTrack;
 	public int StartCheckpoint = 0;
 
+	public float knockBack = 30;
+
 	public GameObject[] checkPoints;
 	
 	public LinkedList<Vector3> queued = new LinkedList<Vector3>();

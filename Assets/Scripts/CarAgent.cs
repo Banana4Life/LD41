@@ -294,7 +294,8 @@ public class CarAgent : MonoBehaviour
         if ((CompareTag("Player") || CompareTag("Enemy")) && (other.CompareTag("Player") || other.CompareTag("Enemy")))
         {
             var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
-            otherAgent.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * 30;
+            var dir = (transform.position - other.transform.position).normalized * game.knockBack * -1;
+            otherAgent.velocity = new Vector3(dir.x, dir.y / 20, dir.z);
         }
     }
 
