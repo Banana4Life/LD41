@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -198.16, y: -2.7, z: -169.52998}
+  m_LocalPosition: {x: -193, y: -3, z: -173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
@@ -150,8 +150,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObj: {fileID: 0}
-  checkPoint: 4
+  checkPoint: 0
+  targetPoint: {x: 0, y: 0, z: 0}
   playerControlled: 0
+  Round: 0
 --- !u!136 &136511913581143956
 CapsuleCollider:
   m_ObjectHideFlags: 1

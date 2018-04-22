@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -21,6 +22,7 @@ public class CarAgent : MonoBehaviour
 
     private float delta = 0f;
     public int Round = 0;
+    public int placePoints;
 
     // Use this for initialization
     void Awake()
@@ -32,11 +34,9 @@ public class CarAgent : MonoBehaviour
 
     void Start()
     {
+        game.placing.Add(this);
         checkPoint = game.StartCheckpoint;
-        if (!playerControlled)
-        {
-            NextCheckpoint();
-        }
+        NextTarget();
     }
 
     // Update is called once per frame
@@ -49,12 +49,19 @@ public class CarAgent : MonoBehaviour
             game.ghostCar.active = true;
         }
         DrawPath();
-
+        
         if (game.runSimulation)
         {
             resume();
             UpdateSimulation();
             game.ghostCar.active = false;
+            int i = 0;
+            foreach (Transform child in transform.parent)
+            {
+                i++;
+                var ag = child.gameObject.GetComponent<CarAgent>();
+                child.gameObject.name = "Car " + i + " R " + ag.Round + " CP " + ag.checkPoint;
+            }
         }
         else
         {
@@ -330,7 +337,7 @@ public class CarAgent : MonoBehaviour
                 if (checkPoint == game.StartCheckpoint)
                 {
                     Round++;
-                    if (playerControlled) {
+                    if (playerControlled ) {
                         Debug.Log("Round: " + Round);
                     }
                 }
@@ -375,20 +382,22 @@ public class CarAgent : MonoBehaviour
     private void NextCheckpoint()
     {
         checkPoint = (checkPoint + 1) % game.checkPoints.Length;
-        
+        NextTarget();
+    }
+
+    private void NextTarget()
+    {
         var target = game.checkPoints[checkPoint];
 
         targetPoint = target.transform.position;
         targetPoint = target.transform.right.normalized * Random.Range(-7f, 7f) + targetPoint;
 
         updateAgent = true;
-
     }
 
     private void UpdateSimulation()
     {
-        var deltaSpeed = (float) Random.Range(-1, 2);
-        agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
+        UpdateSpeed();
 
         if (playerControlled)
         {
@@ -444,6 +453,16 @@ public class CarAgent : MonoBehaviour
             }	
         }
         */
+    }
+
+    private void UpdateSpeed()
+    {
+        var deltaSpeed = Random.Range(-1.5f, 1f);
+        agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
+
+        var deltePlacePoints = game.placing.First().placePoints - placePoints;
+        agent.speed = deltePlacePoints / 1500 + agent.speed;
+
     }
 
     private static float GetPathLength(NavMeshAgent agent, IEnumerable<Vector3> plannedPath)
