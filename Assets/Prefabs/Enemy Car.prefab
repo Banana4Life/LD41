@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 195773345252769564}
   - component: {fileID: 136511913581143956}
   - component: {fileID: 54636051613713816}
+  - component: {fileID: 114833915352601088}
   m_Layer: 9
   m_Name: Enemy Car
   m_TagString: Enemy
@@ -54,14 +55,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260338589884670}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -193, y: -3, z: -164}
+  m_LocalRotation: {x: -0.023029685, y: 0.9977543, z: -0.0054497453, w: -0.06266106}
+  m_LocalPosition: {x: -19.12, y: 0.82, z: -3.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370772418511408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.78800005, y: 187.16899, z: -2.595}
 --- !u!4 &4370772418511408
 Transform:
   m_ObjectHideFlags: 1
@@ -155,6 +156,23 @@ MonoBehaviour:
   playerControlled: 0
   Round: 0
   placePoints: 0
+--- !u!114 &114833915352601088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260338589884670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c62618efba04da389f773b1f6a15d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Materials:
+  - {fileID: 2100000, guid: 85ef236d5e52d324a9b8fba03291315a, type: 2}
+  - {fileID: 2100000, guid: f55cc43c7d06648fd87704268cdb9296, type: 2}
+  - {fileID: 2100000, guid: 0f4c93ac4bcb4814a89cd96819e54786, type: 2}
+  - {fileID: 2100000, guid: 6c2f9288fd36d034894a72150c7924b6, type: 2}
+  RendererInChildren: 1
 --- !u!136 &136511913581143956
 CapsuleCollider:
   m_ObjectHideFlags: 1
