@@ -291,7 +291,7 @@ public class CarAgent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((CompareTag("Player") || CompareTag("Ememy")) && (other.CompareTag("Player") || other.CompareTag("Enemy")))
+        if ((CompareTag("Player") || CompareTag("Enemy")) && (other.CompareTag("Player") || other.CompareTag("Enemy")))
         {
             var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
             otherAgent.velocity = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 30;
