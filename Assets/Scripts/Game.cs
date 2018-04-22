@@ -7,20 +7,22 @@ public class Game : MonoBehaviour
 {
 	public GameObject RaceTrack;
 	public GameObject CheckpointTrack;
-	public int StartCheckpoint = 0;
+	
+	public bool runSimulation = true;
+	public bool testing;
+	public bool drawPaths;
 
+	public int StartCheckpoint = 0;
+	
 	public float knockBack = 30;
 
 	public float maxCost = 150;
 
 
-	public bool drawPaths;
-
 	public GameObject[] checkPoints;
 	
 	public LinkedList<Vector3> queued = new LinkedList<Vector3>();
 
-	public bool runSimulation = true;
 
 	public Vector3 camOffset1 = new Vector3(0,5,-4);
 	public Vector3 camRot1 = new Vector3(30,0,0);
@@ -31,7 +33,6 @@ public class Game : MonoBehaviour
 	public GameObject trailmesh;
 	public Vector3[] splinePath;
 	public Vector3[] splineVelocity;
-	public bool testing;
 
 	public GameObject ghostCar;
 	

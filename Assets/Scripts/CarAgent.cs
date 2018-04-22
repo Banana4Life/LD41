@@ -9,12 +9,14 @@ public class CarAgent : MonoBehaviour
     private Game game;
     private NavMeshAgent agent;
     public int checkPoint;
+    public Vector3 targetPoint;
 
     private Vector3 lastAgentVelocity;
     private NavMeshPath lastAgentPath;
 
     private bool paused;
 
+    private bool updateAgent = true;
     public bool playerControlled;
 
     private float delta = 0f;
@@ -25,15 +27,15 @@ public class CarAgent : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         game = GameObj.GetComponent<Game>();
+        targetPoint = transform.position;
     }
 
     void Start()
     {
         checkPoint = game.StartCheckpoint;
-        var target = game.checkPoints[checkPoint];
         if (!playerControlled)
         {
-            agent.SetDestination(target.transform.position);
+            NextCheckpoint();
         }
     }
 
@@ -179,11 +181,12 @@ public class CarAgent : MonoBehaviour
     {
         List<Vector3> verts = new List<Vector3>();
         List<int> triangles = new List<int>();
-        
+
+        Vector3 last = transform.position;
+
         if (game.drawPaths)
         {
             
-            Vector3 last = transform.position;
             if (!agent.isStopped)
             {
                 Debug.DrawLine(agent.destination, last, Color.cyan);
@@ -193,7 +196,6 @@ public class CarAgent : MonoBehaviour
                 {
                     var next = new Vector3(v3.x, v3.y, v3.z);
 
-                    drawArc(last, next, verts, triangles);
                     Debug.DrawLine(next, last, Color.yellow);
                     last = next;
                 }
@@ -201,21 +203,20 @@ public class CarAgent : MonoBehaviour
                 last = agent.destination;
             }
             
-            if (playerControlled)
-            {
-                foreach (var v3 in game.queued)
-                {
-                    var next = new Vector3(v3.x, v3.y, v3.z);
-
-                    drawArc(last, next, verts, triangles);
-                    Debug.DrawLine(next, last, Color.red);
-                    last = next;
-                }    
-            }
+            
         }
         
         if (playerControlled)
         {
+            foreach (var v3 in game.queued)
+            {
+                var next = new Vector3(v3.x, v3.y, v3.z);
+
+                drawArc(last, next, verts, triangles);
+                Debug.DrawLine(next, last, Color.red);
+                last = next;
+            }  
+            
             var meshy = new Mesh();
 
             var mf = game.trailmesh.GetComponent<MeshFilter>();
@@ -374,6 +375,14 @@ public class CarAgent : MonoBehaviour
     private void NextCheckpoint()
     {
         checkPoint = (checkPoint + 1) % game.checkPoints.Length;
+        
+        var target = game.checkPoints[checkPoint];
+
+        targetPoint = target.transform.position;
+        targetPoint = target.transform.right.normalized * Random.Range(-7f, 7f) + targetPoint;
+
+        updateAgent = true;
+
     }
 
     private void UpdateSimulation()
@@ -396,18 +405,11 @@ public class CarAgent : MonoBehaviour
                 }
             }
         }
-        else
+        else if (updateAgent)
         {
-            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination,
-                agent.stoppingDistance))
-            {
-                agent.ResetPath();
-//                NextCheckpoint();
-
-                var target = game.checkPoints[checkPoint];
-
-                agent.SetDestination(target.transform.position);
-            }
+            updateAgent = false;
+            agent.ResetPath();
+            agent.SetDestination(targetPoint);
         }
 
 
