@@ -37,11 +37,9 @@ public class CarAgent : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
-		var agent = GetComponent<NavMeshAgent>();
-		
 		if (playerControlled)
 		{
-			UpdatePlayerInput(agent);
+			UpdatePlayerInput();
 						
 			if (game.runSimulation)
 			{
@@ -57,7 +55,7 @@ public class CarAgent : MonoBehaviour
 		if (game.runSimulation)
 		{
 			resume();
-			UpdateSimulation(agent);
+			UpdateSimulation();
 		}
 		else
 		{
@@ -65,7 +63,7 @@ public class CarAgent : MonoBehaviour
 		}
 	}
 
-	private void UpdatePlayerInput(NavMeshAgent agent)
+	private void UpdatePlayerInput()
 	{
 		var meshy = new Mesh();
 		List<Vector3> verts = new List<Vector3>();
@@ -279,7 +277,7 @@ public class CarAgent : MonoBehaviour
 		}		
 	}
 
-	private void UpdateSimulation(NavMeshAgent agent)
+	private void UpdateSimulation()
 	{
 		var deltaSpeed = (float) Random.Range(-1, 2);
 		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 20, 30);
