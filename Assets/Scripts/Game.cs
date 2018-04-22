@@ -26,6 +26,8 @@ public class Game : MonoBehaviour
 	public Vector3[] splineVelocity;
 	public bool testing;
 
+	public GameObject ghostCar;
+	
 	void Awake()
 	{
 		var wrapper = CheckpointTrack.GetComponent<BezierSpline>().transform;

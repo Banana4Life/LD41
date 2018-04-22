@@ -115,13 +115,12 @@ public class CarAgent : MonoBehaviour
 				}
 
 				var camPoint = transform.position;
-				if (game.queued.Count != 0)
+				if (game.queued.Count > 1)
 				{
-					camPoint = game.queued.Last.Value;
+					camPoint = game.queued.Last.Previous.Value;
 				}
 
 				var offset = game.RaceTrack.transform.position;
-
 				
 				float minMag = float.PositiveInfinity;
 				Vector3 min = camPoint;
@@ -191,6 +190,18 @@ public class CarAgent : MonoBehaviour
 			}
 		}
 		
+		
+		if (!game.runSimulation && game.queued.Count != 0)
+		{
+			var lastPoint = game.queued.Last;
+			var prevPoint = lastPoint.Previous;
+			if (prevPoint != null)
+			{
+				game.ghostCar.transform.position = prevPoint.Value;
+				game.ghostCar.transform.LookAt(lastPoint.Value);
+			}
+
+		}
 		
 		
 		
