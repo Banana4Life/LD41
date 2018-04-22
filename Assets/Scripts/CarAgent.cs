@@ -80,9 +80,26 @@ public class CarAgent : MonoBehaviour
 		
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
+		float lastYPos = agent.transform.position.y - 1;
+		if (game.queued.Count != 0)
+		{
+			lastYPos = game.queued.Last.Value.y - 1;
+		}
 		if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
 		{
 			var point = hit.point + hit.normal / 10f;
+			
+			if (hit.point.y > lastYPos)
+			{
+				var ray2 = new Ray(hit.point + Vector3.down / 50, ray.direction);
+				if (Physics.Raycast(ray2, out hit, 1 << 8))
+				{
+					if (hit.point.y > lastYPos)
+					{
+						point = hit.point;
+					}
+				}
+			}
 			
 			if (!game.runSimulation)
 			{
@@ -104,12 +121,15 @@ public class CarAgent : MonoBehaviour
 					camPoint = game.queued.Last.Value;
 				}
 
+				var offset = game.RaceTrack.transform.position;
+
+				
 				float minMag = float.PositiveInfinity;
 				Vector3 min = camPoint;
 				Vector3 dir = Vector3.zero;
 				for (var index = 0; index < game.splinePath.Length; index++)
 				{
-					var splinePoint = game.splinePath[index];
+					var splinePoint = game.splinePath[index] + offset;
 					var mag = (splinePoint - camPoint).sqrMagnitude;
 					if (mag < minMag)
 					{
@@ -118,9 +138,10 @@ public class CarAgent : MonoBehaviour
 						dir = game.splineVelocity[index];
 					}
 				}
-
+				
 				var target = dir + min;
 
+				
 				Camera.main.transform.parent.transform.position = min;
 				Camera.main.transform.parent.LookAt(target);
 				
