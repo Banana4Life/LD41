@@ -193,8 +193,12 @@ public class CarAgent : MonoBehaviour
 	{
 		var lastP = last;
 
-		for (var l = 0f; l <= 1.2; l += 0.1f)
+		var magnitude = (last - next).magnitude;
+		var f = 1f / (magnitude * 10f);
+		Debug.Log(magnitude + " -- " + f);
+		for (var l = 0f; l <= 1.2; l += f)
 		{
+			
 			var nextP = SampleParabola(last, next, 4, l);
 			//Debug.DrawLine(lastP, nextP, Color.magenta);
 			lastP = nextP;
