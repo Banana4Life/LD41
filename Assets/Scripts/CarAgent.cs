@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions.Comparers;
 using Random = UnityEngine.Random;
 
 public class CarAgent : MonoBehaviour
@@ -87,6 +88,7 @@ public class CarAgent : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))
 				{
+					
 					game.queued.AddLast(point);
 					var total = GetPathLength(agent, game.queued);
 					Debug.LogWarning("Path cost: " + total);
@@ -95,6 +97,32 @@ public class CarAgent : MonoBehaviour
 				{
 					game.queued.RemoveLast();
 				}
+
+				var camPoint = transform.position;
+				if (game.queued.Count != 0)
+				{
+					camPoint = game.queued.Last.Value;
+				}
+
+				float minMag = float.PositiveInfinity;
+				Vector3 min = camPoint;
+				Vector3 dir = Vector3.zero;
+				for (var index = 0; index < game.splinePath.Length; index++)
+				{
+					var splinePoint = game.splinePath[index];
+					var mag = (splinePoint - camPoint).sqrMagnitude;
+					if (mag < minMag)
+					{
+						minMag = mag;
+						min = splinePoint;
+						dir = game.splineVelocity[index];
+					}
+				}
+
+				var target = dir + min;
+
+				Camera.main.transform.parent.transform.position = min;
+				Camera.main.transform.parent.LookAt(target);
 				
 			}
 
@@ -186,6 +214,7 @@ public class CarAgent : MonoBehaviour
 	Vector3 SampleParabola ( Vector3 start, Vector3 end, float height, float pCent ) {
 		if ( Mathf.Abs( start.y - end.y ) < 0.1f ) {
 			//start and end are roughly level, pretend they are - simpler solution with less steps
+
 			Vector3 travelDirection = end - start;
 			Vector3 result = start + pCent * travelDirection;
 			result.y += Mathf.Sin( pCent * Mathf.PI ) * height;
@@ -245,7 +274,6 @@ public class CarAgent : MonoBehaviour
 		{
 			Camera.main.transform.parent.transform.position = transform.position;
 			Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
-		
 			
 			if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
 			{

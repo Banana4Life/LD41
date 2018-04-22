@@ -21,6 +21,8 @@ public class Game : MonoBehaviour
 	public Vector3 camRot2 = new Vector3(30,0,0);
 
 	public GameObject trailmesh;
+	public Vector3[] splinePath;
+	public Vector3[] splineVelocity;
 
 	void Awake()
 	{
@@ -32,5 +34,28 @@ public class Game : MonoBehaviour
 		{
 			checkPoints[i++] = t.gameObject;
 		}
+
+		GetPath(RaceTrack.GetComponent<BezierSpline>(), 500);
+	}
+	
+	
+	private void GetPath(BezierSpline spline, int pointsCount)
+	{
+		splinePath = new Vector3[pointsCount];
+		splineVelocity = new Vector3[pointsCount];
+
+		for (int i = 0; i < pointsCount; i++)
+		{
+			float t = i / (float)(pointsCount - 1);
+
+			if (spline.Loop)
+				t = i / (float)(pointsCount);
+
+			splinePath[i] = spline.GetPoint(t);
+			splineVelocity[i] = spline.GetVelocity(t);
+		}
+
+		
+		
 	}
 }

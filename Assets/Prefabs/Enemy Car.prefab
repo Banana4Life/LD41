@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObj: {fileID: 0}
-  checkPoint: 0
+  checkPoint: 8
   playerControlled: 0
 --- !u!136 &136511913581143956
 CapsuleCollider:
