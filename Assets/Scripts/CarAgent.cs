@@ -156,13 +156,28 @@ public class CarAgent : MonoBehaviour
                         }
                     }
 
-                    game.queued.AddLast(point);
-                    var total = GetPathLength(agent, game.queued);
-
-                    if (total > game.maxCost && !game.testing)
+                    var lastPoint = transform.position;
+                    if (game.queued.Count > 0)
                     {
-                        Debug.LogWarning("Path cost: " + total);
-                        game.queued.RemoveLast();
+                        lastPoint = game.queued.Last.Value;
+                    }
+
+                    var path = new NavMeshPath();
+                    NavMesh.CalculatePath(lastPoint, point, NavMesh.AllAreas, path);
+                    if (GetPathLength(path, lastPoint) > 50)
+                    {
+                        Debug.LogWarning("Path too long. Choose smaller steps,");
+                    }
+                    else
+                    {
+                        game.queued.AddLast(point);
+                        var total = GetPathLength(agent, game.queued);
+
+                        if (total > game.maxCost && !game.testing)
+                        {
+                            Debug.LogWarning("Path cost: " + total);
+                            game.queued.RemoveLast();
+                        }
                     }
                 }
             }
