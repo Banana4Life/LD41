@@ -203,7 +203,7 @@ public class CarAgent : MonoBehaviour
         
        
         // GhostCar
-        if (!game.runSimulation && game.queued.Count != 0)
+        if (!game.runSimulation && game.queued.Count > 1)
         {
             var lastPoint = game.queued.Last;
             var prevPoint = lastPoint.Previous;
@@ -212,6 +212,10 @@ public class CarAgent : MonoBehaviour
                 game.ghostCar.transform.position = prevPoint.Value;
                 game.ghostCar.transform.LookAt(lastPoint.Value);
             }
+        }
+        else
+        {
+            game.ghostCar.active = false;
         }
     }
 
