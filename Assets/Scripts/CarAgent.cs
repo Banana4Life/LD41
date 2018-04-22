@@ -40,6 +40,17 @@ public class CarAgent : MonoBehaviour
 		if (playerControlled)
 		{
 			UpdatePlayerInput(agent);
+						
+			if (game.runSimulation)
+			{
+				Camera.main.transform.localPosition = game.camOffset1;
+				Camera.main.transform.localEulerAngles = game.camRot1;
+			}
+			else
+			{
+				Camera.main.transform.localPosition = game.camOffset2;
+				Camera.main.transform.localEulerAngles = game.camRot2;
+			}
 		}
 		if (game.runSimulation)
 		{
@@ -56,15 +67,23 @@ public class CarAgent : MonoBehaviour
 	{
 		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit))
+		if (Physics.Raycast(ray, out hit, 1 << 8)) // Only hit Track
 		{
 			var point = hit.point + hit.normal / 10f;
 			
-			if (!game.runSimulation && Input.GetMouseButtonUp(0))
+			if (!game.runSimulation)
 			{
-				var total = GetPathLength(agent, game.queued);
-				Debug.LogWarning("Path cost: " + total);
-				game.queued.Enqueue(point);
+				if (Input.GetMouseButtonUp(0))
+				{
+					game.queued.AddLast(point);
+					var total = GetPathLength(agent, game.queued);
+					Debug.LogWarning("Path cost: " + total);
+				}
+				else if (Input.GetMouseButtonUp(1))
+				{
+					game.queued.RemoveLast();
+				}
+				
 			}
 
 			Vector3 last = transform.position;
@@ -97,7 +116,9 @@ public class CarAgent : MonoBehaviour
 			if (agent.isStopped)
 			{
 				agent.ResetPath();
-				agent.SetDestination(game.queued.Dequeue());	
+				
+				agent.SetDestination(game.queued.First.Value);
+				game.queued.RemoveFirst();
 			}
 		}
 		
@@ -137,7 +158,7 @@ public class CarAgent : MonoBehaviour
 		}		
 	}
 
-	private void  UpdateSimulation(NavMeshAgent agent)
+	private void UpdateSimulation(NavMeshAgent agent)
 	{
 		var deltaSpeed = (float) Random.Range(-1, 2);
 		agent.speed = Mathf.Clamp(agent.speed + deltaSpeed / 10, 7, 13);
@@ -146,13 +167,14 @@ public class CarAgent : MonoBehaviour
 		{
 			Camera.main.transform.parent.transform.position = transform.position;
 			Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
-			
+		
 			
 			if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 3f))
 			{
 				if (game.queued.Count > 0)
 				{
-					agent.SetDestination(game.queued.Dequeue());
+					agent.SetDestination(game.queued.First.Value);
+					game.queued.RemoveFirst();
 				}
 				else
 				{
