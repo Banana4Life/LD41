@@ -13,6 +13,9 @@ public class Game : MonoBehaviour
 
 	public float maxCost = 150;
 
+
+	public bool drawPaths;
+
 	public GameObject[] checkPoints;
 	
 	public LinkedList<Vector3> queued = new LinkedList<Vector3>();

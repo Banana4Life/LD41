@@ -44,8 +44,8 @@ public class CarAgent : MonoBehaviour
             UpdatePlayerInput();
             UpdatePlayerCam();
             game.ghostCar.active = true;
-            DrawPlayerPath();
         }
+        DrawPath();
 
         if (game.runSimulation)
         {
@@ -174,58 +174,82 @@ public class CarAgent : MonoBehaviour
        
     }
 
-    private void DrawPlayerPath()
+    private void DrawPath()
     {
-        var meshy = new Mesh();
         List<Vector3> verts = new List<Vector3>();
         List<int> triangles = new List<int>();
-        Vector3 last = transform.position;
-        if (!agent.isStopped)
+        
+        if (game.drawPaths)
         {
-            Debug.DrawLine(agent.destination, last, Color.cyan);
-            last = agent.destination;
-        }
-
-        foreach (var v3 in game.queued)
-        {
-            var next = new Vector3(v3.x, v3.y, v3.z);
-
-            drawArc(last, next, verts, triangles);
-            Debug.DrawLine(next, last, Color.red);
-            last = next;
-        }
-
-
-        var mf = game.trailmesh.GetComponent<MeshFilter>();
-        meshy.vertices = verts.ToArray();
-        meshy.triangles = triangles.ToArray();
-        var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
-        if (meshy.triangles.Length > 0)
-        {
-            ps.Play();
-        }
-        else
-        {
-            ps.Clear();
-            ps.Stop();
-        }
-        mf.mesh = meshy;
-
-        // GhostCar
-        if (!game.runSimulation && game.queued.Count > 1)
-        {
-            var lastPoint = game.queued.Last;
-            var prevPoint = lastPoint.Previous;
-            if (prevPoint != null)
+            
+            Vector3 last = transform.position;
+            if (!agent.isStopped)
             {
-                game.ghostCar.transform.position = prevPoint.Value;
-                game.ghostCar.transform.LookAt(lastPoint.Value);
+                Debug.DrawLine(agent.destination, last, Color.cyan);
+                last = agent.destination;
+                
+                foreach (var v3 in agent.path.corners)
+                {
+                    var next = new Vector3(v3.x, v3.y, v3.z);
+
+                    drawArc(last, next, verts, triangles);
+                    Debug.DrawLine(next, last, Color.yellow);
+                    last = next;
+                }
+
+                last = agent.destination;
+            }
+            
+            if (playerControlled)
+            {
+                foreach (var v3 in game.queued)
+                {
+                    var next = new Vector3(v3.x, v3.y, v3.z);
+
+                    drawArc(last, next, verts, triangles);
+                    Debug.DrawLine(next, last, Color.red);
+                    last = next;
+                }    
             }
         }
-        else
+        
+        if (playerControlled)
         {
-            game.ghostCar.active = false;
+            var meshy = new Mesh();
+
+            var mf = game.trailmesh.GetComponent<MeshFilter>();
+            meshy.vertices = verts.ToArray();
+            meshy.triangles = triangles.ToArray();
+            var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
+            if (meshy.triangles.Length > 0)
+            {
+                ps.Play();
+            }
+            else
+            {
+                ps.Clear();
+                ps.Stop();
+            }
+            mf.mesh = meshy;
+
+            // GhostCar
+            if (!game.runSimulation && game.queued.Count > 1)
+            {
+                var lastPoint = game.queued.Last;
+                var prevPoint = lastPoint.Previous;
+                if (prevPoint != null)
+                {
+                    game.ghostCar.transform.position = prevPoint.Value;
+                    game.ghostCar.transform.LookAt(lastPoint.Value);
+                }
+            }
+            else
+            {
+                game.ghostCar.active = false;
+            }
         }
+        
+        
     }
 
     private void drawArc(Vector3 last, Vector3 next, List<Vector3> verts, List<int> triangles)
