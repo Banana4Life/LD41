@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4283980093643170}
   - component: {fileID: 65821484383052892}
-  m_Layer: 19
+  m_Layer: 11
   m_Name: PickUpThing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4630949952986870}
   - component: {fileID: 198922707853042150}
   - component: {fileID: 199443641644869916}
-  m_Layer: 19
+  m_Layer: 11
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4495939283141408}
   - component: {fileID: 198190050110965394}
   - component: {fileID: 199072323928750802}
-  m_Layer: 19
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -321,6 +321,14 @@ public class CarAgent : MonoBehaviour
             var dir = (transform.position - other.transform.position).normalized * game.knockBack * -1;
             otherAgent.velocity = new Vector3(dir.x, dir.y / 20, dir.z);
         }
+        else
+        {
+            if (other.CompareTag("Checkpoint") && other.gameObject == game.checkPoints[checkPoint])
+            {
+                NextCheckpoint();
+            }
+        }
+
     }
 
     void pause()
@@ -355,6 +363,11 @@ public class CarAgent : MonoBehaviour
         }
     }
 
+    private void NextCheckpoint()
+    {
+        checkPoint = (checkPoint + 1) % game.checkPoints.Length;
+    }
+
     private void UpdateSimulation()
     {
         var deltaSpeed = (float) Random.Range(-1, 2);
@@ -381,11 +394,7 @@ public class CarAgent : MonoBehaviour
                 agent.stoppingDistance))
             {
                 agent.ResetPath();
-                checkPoint++;
-                if (checkPoint >= game.checkPoints.Length)
-                {
-                    checkPoint = 0;
-                }
+//                NextCheckpoint();
 
                 var target = game.checkPoints[checkPoint];
 
