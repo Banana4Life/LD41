@@ -1123,10 +1123,10 @@ MonoBehaviour:
   knockBack: 30
   maxCost: 150
   checkPoints: []
-  camOffset1: {x: 0, y: 5, z: -4}
+  camOffset1: {x: 0, y: 5, z: -5}
   camRot1: {x: 30, y: 0, z: 0}
-  camOffset2: {x: 0, y: 25, z: -25}
-  camRot2: {x: 50, y: 0, z: 0}
+  camOffset2: {x: 0, y: 25, z: 25}
+  camRot2: {x: 50, y: 180, z: 0}
   trailmesh: {fileID: 371873556}
   splinePath: []
   splineVelocity: []
