@@ -100,6 +100,14 @@ public class CarAgent : MonoBehaviour
 					game.queued.AddLast(point);
 					var total = GetPathLength(agent, game.queued);
 					Debug.LogWarning("Path cost: " + total);
+					
+					if (!game.testing)
+					{
+						if (total > 50)
+						{
+							game.queued.RemoveLast();
+						}
+					}
 				}
 				else if (Input.GetMouseButtonUp(1))
 				{
@@ -195,7 +203,6 @@ public class CarAgent : MonoBehaviour
 
 		var magnitude = (last - next).magnitude;
 		var f = 1f / (magnitude * 10f);
-		Debug.Log(magnitude + " -- " + f);
 		for (var l = 0f; l <= 1.2; l += f)
 		{
 			

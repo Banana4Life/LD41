@@ -24,6 +24,7 @@ public class Game : MonoBehaviour
 	public GameObject trailmesh;
 	public Vector3[] splinePath;
 	public Vector3[] splineVelocity;
+	public bool testing;
 
 	void Awake()
 	{
