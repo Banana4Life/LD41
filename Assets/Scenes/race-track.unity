@@ -1516,41 +1516,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
+    - target: {fileID: 114649553090066744, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 461391269}
+    - target: {fileID: 114649553090066744, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
         type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0.6226034
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
-        type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7825376
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -77.013
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -3.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005012993736420, guid: fcef5bc1c19b64438ba0fd0b4b394e34,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -847.46
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1429272492}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcef5bc1c19b64438ba0fd0b4b394e34, type: 2}
   m_IsPrefabParent: 0
