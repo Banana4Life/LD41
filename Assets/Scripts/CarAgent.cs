@@ -18,6 +18,7 @@ public class CarAgent : MonoBehaviour
     public bool playerControlled;
 
     private float delta = 0f;
+    public int Round = 0;
 
     // Use this for initialization
     void Awake()
@@ -325,6 +326,13 @@ public class CarAgent : MonoBehaviour
         {
             if (other.CompareTag("Checkpoint") && other.gameObject == game.checkPoints[checkPoint])
             {
+                if (checkPoint == game.StartCheckpoint)
+                {
+                    Round++;
+                    if (playerControlled) {
+                        Debug.Log("Round: " + Round);
+                    }
+                }
                 NextCheckpoint();
             }
         }
