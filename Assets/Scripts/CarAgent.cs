@@ -163,7 +163,7 @@ public class CarAgent : MonoBehaviour
 
                     var path = new NavMeshPath();
                     NavMesh.CalculatePath(lastPoint, point, NavMesh.AllAreas, path);
-                    if (GetPathLength(path, lastPoint) > 50)
+                    if (GetPathLength(path, lastPoint) > 40)
                     {
                         Debug.LogWarning("Path too long. Choose smaller steps,");
                     }
