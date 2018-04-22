@@ -1384,8 +1384,8 @@ MonoBehaviour:
   checkPoints: []
   camOffset1: {x: 0, y: 11, z: -8.5}
   camRot1: {x: 30, y: 0, z: 0}
-  camOffset2: {x: 0, y: 25, z: 25}
-  camRot2: {x: 50, y: 180, z: 0}
+  camOffset2: {x: 0, y: 25, z: -25}
+  camRot2: {x: 50, y: 0, z: 0}
   trailmesh: {fileID: 371873556}
   splinePath: []
   splineVelocity: []
@@ -3047,6 +3047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Game: {fileID: 461391269}
   Planning: 0
+  LerpDuration: 3
 --- !u!1 &1463164648
 GameObject:
   m_ObjectHideFlags: 0

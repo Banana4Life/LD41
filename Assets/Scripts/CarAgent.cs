@@ -117,7 +117,7 @@ public class CarAgent : MonoBehaviour
                 }
             }
 
-            var target = dir + min;
+            var target = -dir + min;
 
 
             Camera.main.transform.parent.transform.position = min;
