@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -264,6 +264,12 @@ public class CarAgent : MonoBehaviour
 			result += ( Mathf.Sin( pCent * Mathf.PI ) * height ) * up.normalized;
 			return result;
 		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
+		otherAgent.velocity = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized * 30;
 	}
 
 	void pause() 
