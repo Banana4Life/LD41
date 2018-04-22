@@ -47,7 +47,10 @@ public class CarAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        overDrive -= Time.deltaTime;
+        if (game.runSimulation)
+        {
+            overDrive -= Time.deltaTime;
+        }
         if (overDrive < 0)
         {
             agent.acceleration = 35f;
