@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading;
-using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Assertions.Comparers;
 using Random = UnityEngine.Random;
 
 public class CarAgent : MonoBehaviour
@@ -35,6 +27,7 @@ public class CarAgent : MonoBehaviour
 
 	void Start()
 	{
+		checkPoint = game.StartCheckpoint;
 		var target = game.checkPoints[checkPoint];
 		if (!playerControlled)
 		{

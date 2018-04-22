@@ -7,6 +7,7 @@ public class Game : MonoBehaviour
 {
 	public GameObject RaceTrack;
 	public GameObject CheckpointTrack;
+	public int StartCheckpoint = 0;
 
 	public GameObject[] checkPoints;
 	
