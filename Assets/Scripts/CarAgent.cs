@@ -82,18 +82,17 @@ public class CarAgent : MonoBehaviour
 
     private void UpdatePlayerCam()
     {
+        var cameraController = Camera.main.GetComponent<CameraController>();
         if (game.runSimulation)
         {
-            Camera.main.transform.localPosition = game.camOffset1;
-            Camera.main.transform.localEulerAngles = game.camRot1;
+            cameraController.Planning = false;
 
             Camera.main.transform.parent.transform.position = transform.position;
             Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
         }
         else
         {
-            Camera.main.transform.localPosition = game.camOffset2;
-            Camera.main.transform.localEulerAngles = game.camRot2;
+            cameraController.Planning = true;
 
             var camPoint = transform.position;
             if (game.queued.Count > 0)

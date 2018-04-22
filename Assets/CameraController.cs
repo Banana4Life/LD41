@@ -5,15 +5,21 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
-	public Vector3 Offset;
-	public Vector3 Angle;
-	public GameObject Target;
+	public Game Game;
+	public bool Planning = false;
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		transform.rotation = Target.transform.rotation;
-		transform.position = Target.transform.position;
-		transform.position += Offset;
+		if (Planning)
+		{
+            transform.localPosition = Game.camOffset2;
+            transform.localEulerAngles = Game.camRot2;
+		}
+		else
+		{
+			transform.localPosition = Game.camOffset1;
+			transform.localEulerAngles = Game.camRot1;
+		}
 	}
 }

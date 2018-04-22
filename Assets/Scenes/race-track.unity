@@ -1382,7 +1382,7 @@ MonoBehaviour:
   knockBack: 30
   maxCost: 150
   checkPoints: []
-  camOffset1: {x: 0, y: 5, z: -5}
+  camOffset1: {x: 0, y: 11, z: -8.5}
   camRot1: {x: 30, y: 0, z: 0}
   camOffset2: {x: 0, y: 25, z: 25}
   camRot2: {x: 50, y: 180, z: 0}
@@ -2951,6 +2951,7 @@ GameObject:
   - component: {fileID: 1459424199}
   - component: {fileID: 1459424198}
   - component: {fileID: 1459424202}
+  - component: {fileID: 1459424203}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3033,6 +3034,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: fcf2e61363b59ee4aa2ed6f634aaeb48, type: 2}
+--- !u!114 &1459424203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1459424197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f130d99388094576a68c762b612d317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Game: {fileID: 461391269}
+  Planning: 0
 --- !u!1 &1463164648
 GameObject:
   m_ObjectHideFlags: 0
