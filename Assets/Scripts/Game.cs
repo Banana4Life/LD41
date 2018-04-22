@@ -41,6 +41,9 @@ public class Game : MonoBehaviour
 	public int maxSpeed = 30;
 	public int overDriveSpeed = 50;
 
+	public GameObject placingTexts;
+	public GameObject player;
+
 	void Awake()
 	{
 		var wrapper = CheckpointTrack.GetComponent<BezierSpline>().transform;
@@ -84,6 +87,15 @@ public class Game : MonoBehaviour
 			ag.placePoints = placePoints;
 			return placePoints;
 		}).Reverse().ToList();
+
+		int i = 0;
+		foreach (Transform transform in placingTexts.transform)
+		{
+			var placed = placing[i].transform;
+			transform.position = placed.position + Vector3.up;
+			transform.LookAt(Camera.main.transform.position);
+			i++;
+		}
 	}
 
 	private int pathIndex(Vector3 position)
