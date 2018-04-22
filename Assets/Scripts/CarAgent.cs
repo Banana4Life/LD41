@@ -86,12 +86,12 @@ public class CarAgent : MonoBehaviour
     private void UpdatePlayerCam()
     {
         var cameraController = Camera.main.GetComponent<CameraController>();
+        var ufoController = Camera.main.transform.parent.GetComponent<CameraUfoController>();
         if (game.runSimulation)
         {
             cameraController.Planning = false;
 
-            Camera.main.transform.parent.transform.position = transform.position;
-            Camera.main.transform.parent.eulerAngles = transform.eulerAngles;
+            ufoController.SetTarget(transform);
         }
         else
         {
@@ -123,8 +123,9 @@ public class CarAgent : MonoBehaviour
             var target = -dir + min;
 
 
-            Camera.main.transform.parent.transform.position = min;
-            Camera.main.transform.parent.LookAt(target);
+            ufoController.SetTarget(min, Quaternion.LookRotation(target - ufoController.transform.position));
+//            Camera.main.transform.parent.transform.position = min;
+//            Camera.main.transform.parent.transform.rotation = Quaternion.LookRotation(target - ufoController.transform.position);
         }
     }
 

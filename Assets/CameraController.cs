@@ -31,8 +31,6 @@ public class CameraController : MonoBehaviour
 
 		if (previousPlanningState != Planning)
 		{
-			Debug.Log("Position: " + transform.localPosition + " -> " + targetPosition);
-			Debug.Log("Rotation: " + transform.localEulerAngles + " -> " + targetEulerAngles);
 			previousPlanningState = Planning;
 			lerpBegin = Time.time;	
 		}

@@ -4,7 +4,7 @@
 public class MaterialSelector : MonoBehaviour {
 	
 	public Material[] Materials;
-	public bool RendererInChildren = false;
+	public bool RendererInChildren;
 
 	void Start () {
 		var selection = Materials[Random.Range(0, Materials.Length)];
