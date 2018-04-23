@@ -23,7 +23,6 @@ public class CarAgent : MonoBehaviour
     public bool playerControlled;
     public bool isPlayer;
 
-    private float delta = 0f;
     public int Round = 0;
     public float placePoints;
     
@@ -31,6 +30,8 @@ public class CarAgent : MonoBehaviour
 
     private float overDrive = 0f;
     public int FinishedAt;
+
+    private HashSet<GameObject> colliders = new HashSet<GameObject>();
 
     // Use this for initialization
     void Awake()
@@ -52,6 +53,7 @@ public class CarAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        colliders.Clear();
         if (game.runSimulation)
         {
             overDrive -= Time.deltaTime;
@@ -64,7 +66,7 @@ public class CarAgent : MonoBehaviour
         if (playerControlled)
         {
             UpdatePlayerInput();
-            game.ghostCar.active = true;
+            game.ghostCar.SetActive(true);
         }
         if (isPlayer)
         {
@@ -76,7 +78,7 @@ public class CarAgent : MonoBehaviour
         {
             resume();
             UpdateSimulation();
-            game.ghostCar.active = false;
+            game.ghostCar.SetActive(false);
             int i = 0;
             foreach (Transform child in transform.parent)
             {
@@ -289,7 +291,7 @@ public class CarAgent : MonoBehaviour
             }
             else
             {
-                game.ghostCar.active = false;
+                game.ghostCar.SetActive(false);
             }
         }
         
@@ -356,11 +358,17 @@ public class CarAgent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((CompareTag("Player") || CompareTag("Enemy")) && (other.CompareTag("Player") || other.CompareTag("Enemy")))
+        var otherNavAgent = other.gameObject.GetComponent<NavMeshAgent>();
+        var otherAgent = other.GetComponent<CarAgent>();
+        if (otherAgent)
         {
-            var otherAgent = other.gameObject.GetComponent<NavMeshAgent>();
             var dir = (transform.position - other.transform.position).normalized * game.knockBack * -1;
-            otherAgent.velocity = new Vector3(dir.x, dir.y / 20, dir.z);
+            otherNavAgent.velocity = new Vector3(dir.x, dir.y / 20, dir.z);
+            
+            if (!colliders.Contains(other.gameObject) && !otherAgent.colliders.Contains(gameObject))
+            {
+                CollideOnce(otherAgent);
+            }
         }
         else
         {
@@ -392,14 +400,25 @@ public class CarAgent : MonoBehaviour
                 agent.speed = game.overDriveSpeed;
                 agent.acceleration = 55f;
                 overDrive = 5f;
-                var sound = other.GetComponent<AudioSource>();
-                if (sound)
-                {
-                    sound.Play();
+                if (CompareTag("Player")) {
+                    var sound = other.GetComponent<AudioSource>();
+                    if (sound)
+                    {
+                        sound.Play();
+                    }
                 }
             }
         }
 
+    }
+
+    private void CollideOnce(CarAgent other)
+    {
+        var collisionSound = other.GetComponent<AudioSource>();
+        if (collisionSound)
+        {
+            collisionSound.Play();
+        }
     }
 
     void pause()
