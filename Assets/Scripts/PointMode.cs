@@ -1,6 +1,6 @@
 ﻿public enum PointMode
 {
     SLOWDOWN,
-    SPEEDUP,
-    SUSTAIN
+    SUSTAIN,
+    SPEEDUP
 }

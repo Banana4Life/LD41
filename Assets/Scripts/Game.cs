@@ -129,11 +129,11 @@ public class Game : MonoBehaviour
 		var scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 		if (scroll > 0)
 		{
-			SelectedPointMode = modes[(i + 1) % modes.Length];
+			SelectedPointMode = modes[Math.Min(i + 1, modes.Length - 1)];
 		}
 		else if (scroll < 0)
 		{
-			SelectedPointMode = modes[(i + modes.Length - 1) % modes.Length];
+			SelectedPointMode = modes[Math.Max(i - 1, 0)];
 		}
 
 		if (Input.GetKeyUp(KeyCode.R))
