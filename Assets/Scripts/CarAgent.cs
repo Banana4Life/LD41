@@ -41,6 +41,8 @@ public class CarAgent : MonoBehaviour
     public AudioClip Pickup;
     public AudioClip[] PlayerCollision;
 
+    public int pathIndex;
+
     // Use this for initialization
     void Awake()
     {

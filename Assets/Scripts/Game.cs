@@ -94,6 +94,8 @@ public class Game : MonoBehaviour
 					pathIdx = pathIdx - 500;
 				}
 			}
+
+			ag.pathIndex = pathIdx;
 			var placePoints = ag.Round * checkPoints.Length + ag.checkPoint + pathIdx / 1000f;
 			ag.placePoints = placePoints;
 			return placePoints;
