@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
 
 	public GameObject[] checkPoints;
 	
-	public LinkedList<Vector3> queued = new LinkedList<Vector3>();
+	public LinkedList<Pair<Vector3, bool>> queued = new LinkedList<Pair<Vector3, bool>>();
 
 
 	public Vector3 camOffset1 = new Vector3(0,5,-4);

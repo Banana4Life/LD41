@@ -119,7 +119,7 @@ public class CarAgent : MonoBehaviour
             var camPoint = transform.position;
             if (game.queued.Count > 0)
             {
-                camPoint = game.queued.Last.Value;
+                camPoint = game.queued.Last.Value.Left;
             }
 
             var offset = game.RaceTrack.transform.position;
@@ -151,13 +151,15 @@ public class CarAgent : MonoBehaviour
         float lastYPos = agent.transform.position.y - 1;
         if (game.queued.Count != 0)
         {
-            lastYPos = game.queued.Last.Value.y - 1;
+            lastYPos = game.queued.Last.Value.Left.y - 1;
         }
 
 
         if (!game.runSimulation)
         {
-            if (Input.GetMouseButtonUp(0))
+            var leftMouseClicked = Input.GetMouseButtonUp(0);
+            var rightMouseClicked = Input.GetMouseButtonUp(1);
+            if (leftMouseClicked || rightMouseClicked)
             {
                 var trackMask = LayerMask.GetMask("Track");
                 if (Physics.Raycast(ray, out hit, trackMask)) // Only hit Track
@@ -176,7 +178,7 @@ public class CarAgent : MonoBehaviour
                     var lastPoint = transform.position;
                     if (game.queued.Count > 0)
                     {
-                        lastPoint = game.queued.Last.Value;
+                        lastPoint = game.queued.Last.Value.Left;
                     }
 
                     var path = new NavMeshPath();
@@ -187,8 +189,8 @@ public class CarAgent : MonoBehaviour
                     }
                     else
                     {
-                        game.queued.AddLast(point);
-                        var total = GetPathLength(agent, game.queued);
+                        game.queued.AddLast(new Pair<Vector3, bool>(point, leftMouseClicked));
+                        var total = GetPathLength(agent, game.queued.Select(p => p.Left));
 
                         if (total > game.maxCost && !game.testing)
                         {
@@ -231,7 +233,7 @@ public class CarAgent : MonoBehaviour
             {
                 agent.ResetPath();
 
-                agent.SetDestination(game.queued.First.Value);
+                agent.SetDestination(game.queued.First.Value.Left);
                 game.queued.RemoveFirst();
             }
         }
@@ -271,8 +273,9 @@ public class CarAgent : MonoBehaviour
         
         if (playerControlled)
         {
-            foreach (var v3 in game.queued)
+            foreach (var p in game.queued)
             {
+                var v3 = p.Left;
                 var next = new Vector3(v3.x, v3.y, v3.z);
 
                 drawArc(last, next, verts, triangles);
@@ -327,8 +330,8 @@ public class CarAgent : MonoBehaviour
                 var prevPoint = lastPoint.Previous;
                 if (prevPoint != null)
                 {
-                    game.ghostCar.transform.position = prevPoint.Value;
-                    game.ghostCar.transform.LookAt(lastPoint.Value);
+                    game.ghostCar.transform.position = prevPoint.Value.Left;
+                    game.ghostCar.transform.LookAt(lastPoint.Value.Left);
                 }
             }
             else
@@ -476,8 +479,6 @@ public class CarAgent : MonoBehaviour
 
         paused = true;
 
-        var agent = GetComponent<NavMeshAgent>();
-
         lastAgentVelocity = agent.velocity;
         lastAgentPath = agent.path;
         agent.velocity = Vector3.zero;
@@ -489,7 +490,6 @@ public class CarAgent : MonoBehaviour
         if (paused)
         {
             paused = false;
-            var agent = GetComponent<NavMeshAgent>();
 
             agent.velocity = lastAgentVelocity;
             if (!playerControlled)
@@ -526,7 +526,7 @@ public class CarAgent : MonoBehaviour
             {
                 if (game.queued.Count > 0)
                 {
-                    agent.SetDestination(game.queued.First.Value);
+                    agent.SetDestination(game.queued.First.Value.Left);
                     game.queued.RemoveFirst();
                 }
                 else
