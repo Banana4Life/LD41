@@ -158,8 +158,7 @@ public class CarAgent : MonoBehaviour
         if (!game.runSimulation)
         {
             var leftMouseClicked = Input.GetMouseButtonUp(0);
-            var rightMouseClicked = Input.GetMouseButtonUp(1);
-            if (leftMouseClicked || rightMouseClicked)
+            if (leftMouseClicked)
             {
                 var trackMask = LayerMask.GetMask("Track");
                 if (Physics.Raycast(ray, out hit, trackMask)) // Only hit Track
