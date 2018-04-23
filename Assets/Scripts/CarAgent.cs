@@ -21,6 +21,7 @@ public class CarAgent : MonoBehaviour
 
     private bool updateAgent = true;
     public bool playerControlled;
+    public bool isPlayer;
 
     private float delta = 0f;
     public int Round = 0;
@@ -60,8 +61,11 @@ public class CarAgent : MonoBehaviour
         if (playerControlled)
         {
             UpdatePlayerInput();
-            UpdatePlayerCam();
             game.ghostCar.active = true;
+        }
+        if (isPlayer)
+        {
+            UpdatePlayerCam();
         }
         DrawPath();
         
