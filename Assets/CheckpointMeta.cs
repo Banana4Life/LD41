@@ -27,16 +27,7 @@ public class CheckpointMeta : MonoBehaviour
 		text.gameObject.transform.position = center + Vector3.up * HeightOffset;
 		text.gameObject.transform.eulerAngles = gameCheckPoint.transform.eulerAngles;
 
-
-		var playerPlacing = 0;
-		for (var i = 0; i < game.placing.Count; i++)
-		{
-			if (game.placing[i].gameObject == player.gameObject)
-			{
-				playerPlacing = i + 1;
-				break;
-			}
-		}
+		var playerPlacing = game.GetPlacing(player.gameObject);
 
 		if (playerPlacing > 0)
 		{

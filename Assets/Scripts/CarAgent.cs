@@ -12,6 +12,7 @@ public class CarAgent : MonoBehaviour
     private NavMeshAgent agent;
     public int checkPoint;
     public Vector3 targetPoint;
+    public bool IsFinished;
 
     private Vector3 lastAgentVelocity;
     private NavMeshPath lastAgentPath;
@@ -370,8 +371,11 @@ public class CarAgent : MonoBehaviour
                 if (checkPoint == game.StartCheckpoint)
                 {
                     Round++;
-                    if (playerControlled ) {
-                        Debug.Log("Round: " + Round);
+                    IsFinished = (Round - 1) >= game.NumberOfRounds;
+                    if (IsFinished && playerControlled)
+                    {
+                        playerControlled = false;
+                        NextTarget();
                     }
                 }
                 NextCheckpoint();

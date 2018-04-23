@@ -1400,9 +1400,9 @@ MonoBehaviour:
   maxSpeed: 30
   overDriveSpeed: 50
   placingTexts: {fileID: 1110467412}
-  player: {fileID: 1429272486}
   sleepyTime: 0
   maxSleepyTime: 5
+  NumberOfRounds: 3
 --- !u!4 &461391270
 Transform:
   m_ObjectHideFlags: 0
@@ -6575,6 +6575,7 @@ MonoBehaviour:
   GameObj: {fileID: 461391268}
   checkPoint: 0
   targetPoint: {x: 0, y: 0, z: 0}
+  IsFinished: 0
   playerControlled: 1
   Round: 0
   placePoints: 0

@@ -42,10 +42,10 @@ public class Game : MonoBehaviour
 	public int overDriveSpeed = 50;
 
 	public GameObject placingTexts;
-	public GameObject player;
 
 	public float sleepyTime = 0;
 	public float maxSleepyTime = 5f;
+	public int NumberOfRounds = 3;
 
 	void Awake()
 	{
@@ -84,7 +84,7 @@ public class Game : MonoBehaviour
 	private void Update()
 	{
 		//placing = placing.OrderBy(ag => pathIndex(ag.transform.position) + splinePath.Length * ag.Round).ToList();
-		placing = placing.OrderBy(ag =>
+		placing = placing.OrderBy(ag => ag.IsFinished).ThenBy(ag =>
 		{
 			var pathIdx = pathIndex(ag.transform.position);
 			if (ag.checkPoint == 0)
@@ -107,6 +107,19 @@ public class Game : MonoBehaviour
 			transform.LookAt(Camera.main.transform.position);
 			i++;
 		}
+	}
+
+	public int GetPlacing(GameObject obj)
+	{
+		for (var i = 0; i < placing.Count; i++)
+		{
+			if (placing[i].gameObject == obj)
+			{
+				return i + 1;
+			}
+		}
+
+		return 0;
 	}
 
 	private int pathIndex(Vector3 position)
