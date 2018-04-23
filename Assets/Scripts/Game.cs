@@ -148,7 +148,7 @@ public class Game : MonoBehaviour
 		return 0;
 	}
 
-	private int pathIndex(Vector3 position)
+	public int pathIndex(Vector3 position)
 	{
 		int mindex = 0;
 		float mag = float.PositiveInfinity;

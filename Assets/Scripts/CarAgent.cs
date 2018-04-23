@@ -190,7 +190,8 @@ public class CarAgent : MonoBehaviour
                     }
                     else
                     {
-                        game.queued.AddLast(new Waypoint(point, game.SelectedPointMode));
+                        var pathIdx = game.pathIndex(point);
+                        game.queued.AddLast(new Waypoint(point, game.SelectedPointMode, pathIdx));
                         var total = GetPathLength(agent, game.queued.Select(p => p.Position));
 
                         if (total > game.maxCost && !game.testing)
@@ -525,11 +526,15 @@ public class CarAgent : MonoBehaviour
             game.sleepyTime -= Time.deltaTime;
             if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f))
             {
-                if (game.queued.Count > 0)
+                var waypoint = NextWaypoint();
+                if (waypoint == null)
                 {
-                    var waypoint = game.queued.First.Value;
-                    agent.SetDestination(waypoint.Position);
-                    switch (waypoint.Mode)
+                    game.runSimulation = false;
+                }
+                else
+                {
+                    agent.SetDestination(waypoint.Value.Position);
+                    switch (waypoint.Value.Mode)
                     {
                         case PointMode.SPEEDUP:
                             agent.speed += 5;
@@ -538,11 +543,6 @@ public class CarAgent : MonoBehaviour
                             agent.speed -= 5;
                             break;
                     }
-                    game.queued.RemoveFirst();
-                }
-                else
-                {
-                    game.runSimulation = false;
                 }
             }
             if (game.sleepyTime < 0)
@@ -604,6 +604,24 @@ public class CarAgent : MonoBehaviour
             }	
         }
         */
+    }
+
+    private Waypoint? NextWaypoint()
+    {
+        if (game.queued.Count > 0)
+        {
+            var waypoint = game.queued.First.Value;
+            game.queued.RemoveFirst();
+            if (!(waypoint.PathIndex > pathIndex || waypoint.PathIndex + 250 < pathIndex))
+            {
+                Debug.Log("Skipping waypoint at idx" + waypoint.PathIndex + " vs " + pathIndex);
+                return NextWaypoint();
+            }
+
+            return waypoint;
+        }
+
+        return null;
     }
 
     private void UpdateSpeed()
