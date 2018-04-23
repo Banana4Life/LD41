@@ -275,9 +275,11 @@ public class CarAgent : MonoBehaviour
             meshy.triangles = triangles.ToArray();
             
             Vector2[] uvs = new Vector2[verts.Count];
-
+            
             if (verts.Count > 0)
             {
+                float dLeft = 0f;
+                float dRight = 0f;
                 Vector3 pLeft = verts[0];
                 Vector3 pRight = verts[0];
             
@@ -287,13 +289,15 @@ public class CarAgent : MonoBehaviour
                     {
                         var mag = (pLeft - verts[i]).magnitude;
                         pLeft = verts[i];
-                        uvs[i] = new Vector2(0.0f, i * mag);
+                        dLeft += mag;
+                        uvs[i] = new Vector2(0.0f, dLeft);
                     }
                     else
                     {
                         var mag = (pRight - verts[i]).magnitude;
                         pRight = verts[i];
-                        uvs[i] = new Vector2(1f, i * mag);
+                        dRight += mag;
+                        uvs[i] = new Vector2(1f, dRight);
                     }
 
                 }
@@ -346,8 +350,8 @@ public class CarAgent : MonoBehaviour
             //Debug.DrawLine(lastP, nextP, Color.magenta);
             Debug.DrawLine(nextP, lastP, Color.yellow);
             var dir = Vector3.Cross(nextP - lastP, new Vector3(0, 1, 0));
-            verts.Add(nextP + dir.normalized / 2);
-            verts.Add(nextP - dir.normalized / 2);
+            verts.Add(nextP + dir.normalized / 1.4f);
+            verts.Add(nextP - dir.normalized / 1.4f);
             Debug.DrawLine(nextP - dir.normalized / 2, nextP + dir.normalized / 2);
             
             var i = verts.Count;
