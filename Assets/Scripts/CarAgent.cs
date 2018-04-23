@@ -316,6 +316,11 @@ public class CarAgent : MonoBehaviour
             var nextP = SampleParabola(last, next, 4, l);
             //Debug.DrawLine(lastP, nextP, Color.magenta);
 
+            /*
+                        var dir = Vector3.Cross(nextP - lastP, new Vector3(0, 1, 0));
+            verts.Add(nextP + dir);
+            verts.Add(nextP - dir);
+             */
             verts.Add(nextP + Vector3.left / 20);
             verts.Add(nextP + Vector3.right / 20);
             var i = verts.Count;
