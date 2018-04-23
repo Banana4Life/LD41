@@ -301,14 +301,14 @@ public class CarAgent : MonoBehaviour
                     {
                         var mag = (pLeft - verts[i]).magnitude;
                         pLeft = verts[i];
-                        dLeft += mag;
+                        dLeft += mag * 304 / 1000;
                         uvs[i] = new Vector2(0.0f, dLeft);
                     }
                     else
                     {
                         var mag = (pRight - verts[i]).magnitude;
                         pRight = verts[i];
-                        dRight += mag;
+                        dRight += mag * 304 / 1000;
                         uvs[i] = new Vector2(1f, dRight);
                     }
 
