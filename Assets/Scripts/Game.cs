@@ -44,6 +44,9 @@ public class Game : MonoBehaviour
 	public GameObject placingTexts;
 	public GameObject player;
 
+	public float sleepyTime = 0;
+	public float maxSleepyTime = 5f;
+
 	void Awake()
 	{
 		var wrapper = CheckpointTrack.GetComponent<BezierSpline>().transform;

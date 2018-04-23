@@ -201,6 +201,8 @@ public class CarAgent : MonoBehaviour
 
             game.runSimulation = true;
 
+            game.sleepyTime = game.maxSleepyTime;
+
 
             if (agent.isStopped)
             {
@@ -441,7 +443,8 @@ public class CarAgent : MonoBehaviour
 
         if (playerControlled)
         {
-            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f))
+            game.sleepyTime -= Time.deltaTime;
+            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f) || game.sleepyTime < 0)
             {
                 if (game.queued.Count > 0)
                 {

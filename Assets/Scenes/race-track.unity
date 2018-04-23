@@ -1401,6 +1401,8 @@ MonoBehaviour:
   overDriveSpeed: 50
   placingTexts: {fileID: 1110467412}
   player: {fileID: 1429272486}
+  sleepyTime: 0
+  maxSleepyTime: 5
 --- !u!4 &461391270
 Transform:
   m_ObjectHideFlags: 0
