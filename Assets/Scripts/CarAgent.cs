@@ -194,13 +194,18 @@ public class CarAgent : MonoBehaviour
                         {
                             Debug.LogWarning("Path cost: " + total);
                             game.queued.RemoveLast();
-                            OnClick();
+                            OnClickDeny();
+                            
                         }
                         else
                         {
-                            OnClickDeny();
+                            OnClick();
                         }
                     }
+                }
+                else
+                {
+                    OnClickDeny();
                 }
             }
             else if (Input.GetMouseButtonUp(1))
