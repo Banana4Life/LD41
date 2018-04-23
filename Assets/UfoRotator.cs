@@ -10,7 +10,7 @@ public class UfoRotator : MonoBehaviour
 		var agent = GetComponentInParent<NavMeshAgent>();
 		if (agent)
 		{
-			transform.Rotate(Vector3.up, agent.velocity.magnitude * Scaler * Time.deltaTime);
+			transform.RotateAroundLocal(Vector3.up, agent.velocity.magnitude * Scaler * Time.deltaTime);
 		}
 	}
 }
