@@ -30,6 +30,7 @@ public class CarAgent : MonoBehaviour
     private int maxSpeed = 30;
 
     private float overDrive = 0f;
+    public int FinishedAt;
 
     // Use this for initialization
     void Awake()
@@ -44,6 +45,8 @@ public class CarAgent : MonoBehaviour
         game.placing.Add(this);
         checkPoint = game.StartCheckpoint;
         NextTarget();
+
+        FinishedAt = 11;
     }
 
     // Update is called once per frame
@@ -376,6 +379,7 @@ public class CarAgent : MonoBehaviour
                 {
                     Round++;
                     IsFinished = (Round - 1) >= game.NumberOfRounds;
+                    FinishedAt = game.GetPlacing(gameObject);
                     if (IsFinished && playerControlled)
                     {
                         playerControlled = false;

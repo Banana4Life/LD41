@@ -61,6 +61,8 @@ public class Game : MonoBehaviour
 		checkPoints = checkPoints.Reverse().ToArray();
 		
 		GetPath(RaceTrack.GetComponent<BezierSpline>(), 500);
+		
+		
 	}
 	
 	
@@ -84,7 +86,7 @@ public class Game : MonoBehaviour
 	private void Update()
 	{
 		//placing = placing.OrderBy(ag => pathIndex(ag.transform.position) + splinePath.Length * ag.Round).ToList();
-		placing = placing.OrderBy(ag => ag.IsFinished).ThenBy(ag =>
+		placing = placing.OrderBy(ag => -ag.FinishedAt).ThenBy(ag =>
 		{
 			var pathIdx = pathIndex(ag.transform.position);
 			if (ag.checkPoint == 0)
