@@ -258,7 +258,9 @@ MonoBehaviour:
   ClickSuccess: {fileID: 8300000, guid: 77198ff3c1bdf43fd872dcc916e41874, type: 3}
   ClickDeny: {fileID: 8300000, guid: 2049322f211814842ae012e5e6d7b628, type: 3}
   Pickup: {fileID: 8300000, guid: 1a3d1d2265270448a89f4116818a8b22, type: 3}
-  PlayerCollision: {fileID: 8300000, guid: 09738d030c10d4ba793a1dc6b12cd73f, type: 3}
+  PlayerCollision:
+  - {fileID: 8300000, guid: 09738d030c10d4ba793a1dc6b12cd73f, type: 3}
+  - {fileID: 8300000, guid: 37959dd766b30438486b643c2600dbc0, type: 3}
 --- !u!114 &114833915352601088
 MonoBehaviour:
   m_ObjectHideFlags: 1

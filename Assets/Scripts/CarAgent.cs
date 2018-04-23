@@ -39,7 +39,7 @@ public class CarAgent : MonoBehaviour
     public AudioClip ClickSuccess;
     public AudioClip ClickDeny;
     public AudioClip Pickup;
-    public AudioClip PlayerCollision;
+    public AudioClip[] PlayerCollision;
 
     // Use this for initialization
     void Awake()
@@ -673,7 +673,7 @@ public class CarAgent : MonoBehaviour
 
     void OnPlayerCollision()
     {
-        audioSource.PlayOneShot(PlayerCollision);
+        audioSource.PlayOneShot(PlayerCollision[Random.Range(0, PlayerCollision.Length)]);
     }
     
 }
