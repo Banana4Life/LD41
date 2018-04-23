@@ -465,6 +465,7 @@ public class CarAgent : MonoBehaviour
                         playerControlled = false;
                         game.runSimulation = true;
                         NextTarget();
+                        game.gameOver = true;
                     }
                 }
                 NextCheckpoint();

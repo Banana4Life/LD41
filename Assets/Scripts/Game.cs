@@ -48,6 +48,7 @@ public class Game : MonoBehaviour
 	public float sleepyTime = 0;
 	public float maxSleepyTime = 5f;
 	public int NumberOfRounds = 3;
+	public bool gameOver;
 
 	void Awake()
 	{
