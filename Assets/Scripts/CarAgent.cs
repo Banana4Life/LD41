@@ -305,17 +305,7 @@ public class CarAgent : MonoBehaviour
             
 
             meshy.uv = uvs;
-
-            var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
-            if (meshy.triangles.Length > 0)
-            {
-                ps.Play();
-            }
-            else
-            {
-                ps.Clear();
-                ps.Stop();
-            }
+   
             mf.mesh = meshy;
 
             // GhostCar
