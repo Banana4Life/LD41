@@ -43,6 +43,8 @@ public class CarAgent : MonoBehaviour
 
     public int pathIndex;
 
+    private Waypoint? waypoint;
+
     // Use this for initialization
     void Awake()
     {
@@ -457,6 +459,9 @@ public class CarAgent : MonoBehaviour
                     if (IsFinished && playerControlled)
                     {
                         game.queued.Clear();
+                        var meshy = new Mesh();
+                        var mf = game.trailmesh.GetComponent<MeshFilter>();
+                        mf.mesh = meshy;
                         playerControlled = false;
                         game.runSimulation = true;
                         NextTarget();
@@ -540,17 +545,17 @@ public class CarAgent : MonoBehaviour
         if (playerControlled)
         {
             game.sleepyTime -= Time.deltaTime;
-            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f))
+            if (DidAgentReachDestination(waypoint, agent.gameObject.transform.position, agent.destination, 4f))
             {
-                var waypoint = NextWaypoint();
-                if (waypoint == null)
+                var nWayP = NextWaypoint();
+                if (nWayP == null)
                 {
                     game.runSimulation = false;
                 }
                 else
                 {
-                    agent.SetDestination(waypoint.Value.Position);
-                    switch (waypoint.Value.Mode)
+                    agent.SetDestination(nWayP.Value.Position);
+                    switch (nWayP.Value.Mode)
                     {
                         case PointMode.SPEEDUP:
                             agent.speed += 5;
@@ -634,9 +639,11 @@ public class CarAgent : MonoBehaviour
                 return NextWaypoint();
             }
 
+            this.waypoint = waypoint;
             return waypoint;
         }
 
+        this.waypoint = null;
         return null;
     }
 
@@ -690,8 +697,16 @@ public class CarAgent : MonoBehaviour
         return length;
     }
 
-    public static bool DidAgentReachDestination(Vector3 pos, Vector3 dest, float targetDistance)
+    public bool DidAgentReachDestination(Waypoint? waypoint, Vector3 pos, Vector3 dest, float targetDistance)
     {
+        if (waypoint != null)
+        {
+            if (!(waypoint.Value.PathIndex > pathIndex || waypoint.Value.PathIndex + 250 < pathIndex))
+            {
+                return true;
+            }
+        }
+
         var distance = Vector3.SqrMagnitude(pos - dest);
         return distance <= targetDistance * targetDistance;
     }

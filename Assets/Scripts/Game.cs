@@ -102,7 +102,8 @@ public class Game : MonoBehaviour
 			var placePoints = ag.Round * checkPoints.Length + ag.checkPoint + pathIdx / 1000f;
 			ag.placePoints = placePoints;
 			return placePoints;
-		}).Reverse().ToList();
+		}).ThenBy(ag => (ag.transform.position - ag.targetPoint).sqrMagnitude)
+			.Reverse().ToList();
 
 		int i = 0;
 		foreach (Transform child in placingTexts.transform)
