@@ -386,7 +386,9 @@ public class CarAgent : MonoBehaviour
                        
                     if (IsFinished && playerControlled)
                     {
+                        game.queued.Clear();
                         playerControlled = false;
+                        game.runSimulation = true;
                         NextTarget();
                     }
                 }
@@ -399,7 +401,6 @@ public class CarAgent : MonoBehaviour
                 agent.speed = game.overDriveSpeed;
                 agent.acceleration = 55f;
                 overDrive = 5f;
-                Debug.Log("PickUp! " + gameObject.name);
             }
         }
 
@@ -460,7 +461,7 @@ public class CarAgent : MonoBehaviour
         if (playerControlled)
         {
             game.sleepyTime -= Time.deltaTime;
-            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f) || game.sleepyTime < 0)
+            if (DidAgentReachDestination(agent.gameObject.transform.position, agent.destination, 8f))
             {
                 if (game.queued.Count > 0)
                 {
@@ -471,6 +472,10 @@ public class CarAgent : MonoBehaviour
                 {
                     game.runSimulation = false;
                 }
+            }
+            if (game.sleepyTime < 0)
+            {
+                game.runSimulation = false;
             }
             
             if (!game.runSimulation)
