@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4370772418511408}
   - component: {fileID: 33936384500801662}
   - component: {fileID: 23914046575223332}
+  - component: {fileID: 114076711204012222}
   m_Layer: 9
   m_Name: Ufo
   m_TagString: Untagged
@@ -139,6 +140,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114076711204012222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699540232145994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28790a771bcd94cd3959765361c93748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scaler: 0.3
 --- !u!114 &114524781155033436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,7 +166,9 @@ MonoBehaviour:
   GameObj: {fileID: 0}
   checkPoint: 0
   targetPoint: {x: 0, y: 0, z: 0}
+  IsFinished: 0
   playerControlled: 0
+  isPlayer: 0
   Round: 0
   placePoints: 0
 --- !u!114 &114833915352601088
