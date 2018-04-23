@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -133,6 +134,11 @@ public class Game : MonoBehaviour
 		else if (scroll < 0)
 		{
 			SelectedPointMode = modes[(i + modes.Length - 1) % modes.Length];
+		}
+
+		if (Input.GetKeyUp(KeyCode.R))
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
 

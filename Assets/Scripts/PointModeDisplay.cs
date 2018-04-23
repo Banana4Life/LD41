@@ -10,7 +10,7 @@ public class PointModeDisplay : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		Text text = GetComponent<Text>();
+		var text = GetComponent<Text>();
 
 		if (Game.runSimulation)
 		{
