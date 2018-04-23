@@ -5,8 +5,8 @@ public class CameraUfoController : MonoBehaviour
 
 	public Vector3 TargetPosition;
 	public Quaternion TargetRotation;
-	private Vector3 startPos;
-	private Quaternion startRot;
+	private Vector3? startPos;
+	private Quaternion? startRot;
 	
 	public float LerpDuration = 3;
 
@@ -38,8 +38,14 @@ public class CameraUfoController : MonoBehaviour
 		}
 		else
 		{
-			transform.position = Vector3.Lerp(startPos, TargetPosition, progress);			
-			transform.rotation = Quaternion.Lerp(startRot, TargetRotation, progress);			
+			if (startPos != null)
+			{
+				transform.position = Vector3.Lerp(startPos.Value, TargetPosition, progress);
+			}
+			if (startRot != null)
+			{
+				transform.rotation = Quaternion.Lerp(startRot.Value, TargetRotation, progress);
+			}
 		}
 	}
 }
