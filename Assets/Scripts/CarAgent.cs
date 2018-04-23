@@ -336,7 +336,7 @@ public class CarAgent : MonoBehaviour
         var f = 1f / (magnitude * 2f);
         for (var l = 0f; l <= 1; l += f)
         {
-            var nextP = SampleParabola(last, next, 4, l);
+            var nextP = SampleParabola(last, next, Mathf.Clamp(magnitude / 4, 0.5f, 4f), l);
             //Debug.DrawLine(lastP, nextP, Color.magenta);
             Debug.DrawLine(nextP, lastP, Color.yellow);
             var dir = Vector3.Cross(nextP - lastP, new Vector3(0, 1, 0));
