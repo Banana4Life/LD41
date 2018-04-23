@@ -269,17 +269,29 @@ public class CarAgent : MonoBehaviour
             
             Vector2[] uvs = new Vector2[verts.Count];
 
-            for (int i = 0; i < uvs.Length; i++)
+            if (verts.Count > 0)
             {
-                if (i % 2 == 0)
+                Vector3 pLeft = verts[0];
+                Vector3 pRight = verts[0];
+            
+                for (int i = 0; i < uvs.Length; i++)
                 {
-                    uvs[i] = new Vector2(0.0f, i);
-                }
-                else
-                {
-                    uvs[i] = new Vector2(1f, i);
+                    if (i % 2 == 0)
+                    {
+                        var mag = (pLeft - verts[i]).magnitude;
+                        pLeft = verts[i];
+                        uvs[i] = new Vector2(0.0f, i * mag);
+                    }
+                    else
+                    {
+                        var mag = (pRight - verts[i]).magnitude;
+                        pRight = verts[i];
+                        uvs[i] = new Vector2(1f, i * mag);
+                    }
+
                 }
             }
+            
 
             meshy.uv = uvs;
 
