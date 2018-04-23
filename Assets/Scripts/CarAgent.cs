@@ -266,6 +266,15 @@ public class CarAgent : MonoBehaviour
             var mf = game.trailmesh.GetComponent<MeshFilter>();
             meshy.vertices = verts.ToArray();
             meshy.triangles = triangles.ToArray();
+            
+            Vector2[] uvs = new Vector2[verts.Count];
+
+            for (int i = 0; i < uvs.Length; i++)
+            {
+                uvs[i] = new Vector2(verts[i].x, verts[i].z);
+            }
+
+            meshy.uv = uvs;
             var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
             if (meshy.triangles.Length > 0)
             {
