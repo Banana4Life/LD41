@@ -6283,18 +6283,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4283980093643170, guid: b4ea42429fccc4829a8c5bca6a26f219, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -10.284
-      objectReference: {fileID: 0}
-    - target: {fileID: 4283980093643170, guid: b4ea42429fccc4829a8c5bca6a26f219, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 12.722001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4283980093643170, guid: b4ea42429fccc4829a8c5bca6a26f219, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 2.3620002
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4ea42429fccc4829a8c5bca6a26f219, type: 2}
   m_IsPrefabParent: 0
@@ -7520,7 +7508,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

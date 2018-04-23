@@ -401,6 +401,11 @@ public class CarAgent : MonoBehaviour
                 agent.speed = game.overDriveSpeed;
                 agent.acceleration = 55f;
                 overDrive = 5f;
+                var sound = other.GetComponent<AudioSource>();
+                if (sound)
+                {
+                    sound.Play();
+                }
             }
         }
 
