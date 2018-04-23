@@ -140,6 +140,11 @@ public class Game : MonoBehaviour
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
+
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
 	}
 
 	public int GetPlacing(GameObject obj)
