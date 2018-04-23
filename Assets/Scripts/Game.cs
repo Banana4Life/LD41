@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -110,6 +111,27 @@ public class Game : MonoBehaviour
 			child.position = placed.position + Vector3.up;
 			child.LookAt(Camera.main.transform.position);
 			i++;
+		}
+		
+	}
+
+	private void FixedUpdate()
+	{
+		var modes = Enum.GetValues(typeof(PointMode)).Cast<PointMode>().ToArray();
+		var i = 0;
+		for (; i < modes.Length; ++i)
+		{
+			if (modes[i] == SelectedPointMode) break;
+		}
+		
+		var scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+		if (scroll > 0)
+		{
+			SelectedPointMode = modes[(i + 1) % modes.Length];
+		}
+		else if (scroll < 0)
+		{
+			SelectedPointMode = modes[(i + modes.Length - 1) % modes.Length];
 		}
 	}
 
