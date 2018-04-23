@@ -271,10 +271,18 @@ public class CarAgent : MonoBehaviour
 
             for (int i = 0; i < uvs.Length; i++)
             {
-                uvs[i] = new Vector2(verts[i].x, verts[i].z);
+                if (i % 2 == 0)
+                {
+                    uvs[i] = new Vector2(0.0f, i);
+                }
+                else
+                {
+                    uvs[i] = new Vector2(1f, i);
+                }
             }
 
             meshy.uv = uvs;
+
             var ps = game.trailmesh.GetComponentInChildren<ParticleSystem>();
             if (meshy.triangles.Length > 0)
             {
@@ -309,20 +317,20 @@ public class CarAgent : MonoBehaviour
 
     private void drawArc(Vector3 last, Vector3 next, List<Vector3> verts, List<int> triangles)
     {
+        var lastP = last;
+        
         var magnitude = (last - next).magnitude;
-        var f = 1f / (magnitude * 10f);
+        var f = 1f / (magnitude * 2f);
         for (var l = 0f; l <= 1; l += f)
         {
             var nextP = SampleParabola(last, next, 4, l);
             //Debug.DrawLine(lastP, nextP, Color.magenta);
-
-            /*
-                        var dir = Vector3.Cross(nextP - lastP, new Vector3(0, 1, 0));
-            verts.Add(nextP + dir);
-            verts.Add(nextP - dir);
-             */
-            verts.Add(nextP + Vector3.left / 20);
-            verts.Add(nextP + Vector3.right / 20);
+            Debug.DrawLine(nextP, lastP, Color.yellow);
+            var dir = Vector3.Cross(nextP - lastP, new Vector3(0, 1, 0));
+            verts.Add(nextP + dir.normalized / 2);
+            verts.Add(nextP - dir.normalized / 2);
+            Debug.DrawLine(nextP - dir.normalized / 2, nextP + dir.normalized / 2);
+            
             var i = verts.Count;
             if (i > 2)
             {
@@ -342,6 +350,9 @@ public class CarAgent : MonoBehaviour
                 triangles.Add(i - 2);
                 triangles.Add(i - 1);
             }
+            
+            lastP = nextP;
+
         }
     }
 
