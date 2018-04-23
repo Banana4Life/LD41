@@ -46,7 +46,7 @@ public class CarAgent : MonoBehaviour
         checkPoint = game.StartCheckpoint;
         NextTarget();
 
-        FinishedAt = 11;
+        FinishedAt = 11; // shit code - no of vehicles + 1
     }
 
     // Update is called once per frame
@@ -379,7 +379,11 @@ public class CarAgent : MonoBehaviour
                 {
                     Round++;
                     IsFinished = (Round - 1) >= game.NumberOfRounds;
-                    FinishedAt = game.GetPlacing(gameObject);
+                    if (Round -1 == game.NumberOfRounds)
+                    {
+                        FinishedAt = game.GetPlacing(gameObject);
+                    } 
+                       
                     if (IsFinished && playerControlled)
                     {
                         playerControlled = false;
