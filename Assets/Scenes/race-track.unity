@@ -2729,6 +2729,8 @@ GameObject:
   - component: {fileID: 1081313742}
   - component: {fileID: 1081313744}
   - component: {fileID: 1081313743}
+  - component: {fileID: 1081313746}
+  - component: {fileID: 1081313745}
   m_Layer: 5
   m_Name: Sustain
   m_TagString: Untagged
@@ -2793,6 +2795,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1081313741}
+--- !u!114 &1081313745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1081313741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee96814e2b8940efb572bd2045b8e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 1
+  Game: {fileID: 461391269}
+--- !u!114 &1081313746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1081313741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.89705884, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1091921393
 Prefab:
   m_ObjectHideFlags: 0
@@ -7432,6 +7461,8 @@ GameObject:
   - component: {fileID: 1564729993}
   - component: {fileID: 1564729995}
   - component: {fileID: 1564729994}
+  - component: {fileID: 1564729997}
+  - component: {fileID: 1564729996}
   m_Layer: 5
   m_Name: Slowdown
   m_TagString: Untagged
@@ -7496,6 +7527,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1564729992}
+--- !u!114 &1564729996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1564729992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee96814e2b8940efb572bd2045b8e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 0
+  Game: {fileID: 461391269}
+--- !u!114 &1564729997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1564729992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.89705884, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &1576242745
 Prefab:
   m_ObjectHideFlags: 0
@@ -8646,6 +8704,8 @@ GameObject:
   - component: {fileID: 2100754176}
   - component: {fileID: 2100754179}
   - component: {fileID: 2100754178}
+  - component: {fileID: 2100754180}
+  - component: {fileID: 2100754177}
   m_Layer: 5
   m_Name: Speedup
   m_TagString: Untagged
@@ -8671,6 +8731,19 @@ RectTransform:
   m_AnchoredPosition: {x: 22.3, y: 35.5}
   m_SizeDelta: {x: 60, y: 16}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2100754177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2100754175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee96814e2b8940efb572bd2045b8e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 2
+  Game: {fileID: 461391269}
 --- !u!114 &2100754178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8710,6 +8783,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2100754175}
+--- !u!114 &2100754180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2100754175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.89705884, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &2140116099
 Prefab:
   m_ObjectHideFlags: 0

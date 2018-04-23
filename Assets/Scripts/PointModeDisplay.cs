@@ -22,13 +22,13 @@ public class PointModeDisplay : MonoBehaviour
 		switch (Game.SelectedPointMode)
 		{
 			case PointMode.SPEEDUP:
-				rot.z = -40f;
+				rot.z = 40f;
 				break;
 			case PointMode.SUSTAIN:
 				rot.z = 0f; 
 				break;
 			case PointMode.SLOWDOWN:
-				rot.z = 40f;
+				rot.z = -40f;
 				break;
 		}
 
