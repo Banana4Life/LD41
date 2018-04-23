@@ -191,20 +191,36 @@ public class CarAgent : MonoBehaviour
                     else
                     {
                         var pathIdx = game.pathIndex(point);
-                        game.queued.AddLast(new Waypoint(point, game.SelectedPointMode, pathIdx));
-                        var total = GetPathLength(agent, game.queued.Select(p => p.Position));
-
-                        if (total > game.maxCost && !game.testing)
+                        int prevPathIdx = pathIndex;
+                        if (game.queued.Count > 0)
                         {
-                            Debug.LogWarning("Path cost: " + total);
-                            game.queued.RemoveLast();
+                            prevPathIdx = game.queued.Last.Value.PathIndex;
+                        }
+                        
+                        if (!(pathIdx > prevPathIdx || pathIdx + 250 < prevPathIdx))
+                        {
+                            Debug.LogWarning("Tried to go back");
                             OnClickDeny();
-                            
                         }
                         else
                         {
-                            OnClick();
+                            game.queued.AddLast(new Waypoint(point, game.SelectedPointMode, pathIdx));
+                            var total = GetPathLength(agent, game.queued.Select(p => p.Position));
+
+                            if (total > game.maxCost && !game.testing)
+                            {
+                                Debug.LogWarning("Path cost: " + total);
+                                game.queued.RemoveLast();
+                                OnClickDeny();
+                            
+                            }
+                            else
+                            {
+                                OnClick();
+                            }
                         }
+                        
+                        
                     }
                 }
                 else
