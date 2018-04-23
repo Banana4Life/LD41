@@ -527,6 +527,14 @@ public class CarAgent : MonoBehaviour
                 if (game.queued.Count > 0)
                 {
                     agent.SetDestination(game.queued.First.Value.Left);
+                    if (game.queued.First.Value.Right)
+                    {
+                        agent.speed += 5;
+                    }
+                    else
+                    {
+                        agent.speed -= 5;
+                    }
                     game.queued.RemoveFirst();
                 }
                 else

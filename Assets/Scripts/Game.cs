@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
 	public bool testing;
 	public bool drawPaths;
 
-	public int StartCheckpoint = 0;
+	public int StartCheckpoint;
 	
 	public float knockBack = 30;
 
