@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public class CarAgent : MonoBehaviour
@@ -32,6 +33,12 @@ public class CarAgent : MonoBehaviour
     public int FinishedAt;
 
     private HashSet<GameObject> colliders = new HashSet<GameObject>();
+
+    public AudioClip CheckpointPass;
+    public AudioClip ClickSuccess;
+    public AudioClip ClickDeny;
+    public AudioClip Pickup;
+    public AudioClip PlayerCollision;
 
     // Use this for initialization
     void Awake()
@@ -641,4 +648,25 @@ public class CarAgent : MonoBehaviour
         var distance = Vector3.SqrMagnitude(pos - dest);
         return distance <= targetDistance * targetDistance;
     }
+
+    void OnClick()
+    {
+        
+    }
+
+    void OnCheckpointPass()
+    {
+        
+    }
+
+    void OnPickup()
+    {
+        
+    }
+
+    void OnPlayerCollision()
+    {
+        
+    }
+    
 }
