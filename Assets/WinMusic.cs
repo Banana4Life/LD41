@@ -17,7 +17,9 @@ public class WinMusic : MonoBehaviour
 	void Update () {
 		if (Game.gameOver)
 		{
+			source.Stop();
 			source.clip = FinishClip;
+			source.Play();
 			Destroy(this);
 		}
 	}
