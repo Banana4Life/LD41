@@ -6,30 +6,32 @@ public class PointModeDisplay : MonoBehaviour
 {
 
 	public Game Game;
+	private Text text;
+	
+	void Start()
+	{
+		text = GetComponent<Text>();
+//		text.text = "➤";
+	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		var text = GetComponent<Text>();
 
-		if (Game.runSimulation)
+		var rot = transform.localEulerAngles;
+		switch (Game.SelectedPointMode)
 		{
-			text.text = "";
+			case PointMode.SPEEDUP:
+				rot.z = -40f;
+				break;
+			case PointMode.SUSTAIN:
+				rot.z = 0f; 
+				break;
+			case PointMode.SLOWDOWN:
+				rot.z = 40f;
+				break;
 		}
-		else
-		{
-			switch (Game.SelectedPointMode)
-			{
-				case PointMode.SPEEDUP:
-					text.text = "Getting faster!";
-					break;
-				case PointMode.SLOWDOWN:
-					text.text = "Getting slower!";
-					break;
-				case PointMode.SUSTAIN:
-					text.text = "Keeping speed!";
-					break;
-			}
-		}
+
+		transform.localEulerAngles = rot;
 	}
 }
