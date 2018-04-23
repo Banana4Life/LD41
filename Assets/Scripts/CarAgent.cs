@@ -128,13 +128,7 @@ public class CarAgent : MonoBehaviour
                 }
             }
 
-            var target = -dir + min;
-
-            //Camera.main.transform.LookAt(target);
-
             ufoController.SetTarget(min, Quaternion.LookRotation(-dir));
-//            Camera.main.transform.parent.transform.position = min;
-//            Camera.main.transform.parent.transform.rotation = Quaternion.LookRotation(target - ufoController.transform.position);
         }
     }
 
@@ -304,15 +298,12 @@ public class CarAgent : MonoBehaviour
 
     private void drawArc(Vector3 last, Vector3 next, List<Vector3> verts, List<int> triangles)
     {
-        var lastP = last;
-
         var magnitude = (last - next).magnitude;
         var f = 1f / (magnitude * 10f);
         for (var l = 0f; l <= 1; l += f)
         {
             var nextP = SampleParabola(last, next, 4, l);
             //Debug.DrawLine(lastP, nextP, Color.magenta);
-            lastP = nextP;
 
             verts.Add(nextP + Vector3.left / 20);
             verts.Add(nextP + Vector3.right / 20);

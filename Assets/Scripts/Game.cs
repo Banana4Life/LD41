@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -102,11 +100,11 @@ public class Game : MonoBehaviour
 		}).Reverse().ToList();
 
 		int i = 0;
-		foreach (Transform transform in placingTexts.transform)
+		foreach (Transform child in placingTexts.transform)
 		{
 			var placed = placing[i].transform;
-			transform.position = placed.position + Vector3.up;
-			transform.LookAt(Camera.main.transform.position);
+			child.position = placed.position + Vector3.up;
+			child.LookAt(Camera.main.transform.position);
 			i++;
 		}
 	}

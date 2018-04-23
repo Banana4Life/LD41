@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class UfoRotator : MonoBehaviour
@@ -12,7 +10,7 @@ public class UfoRotator : MonoBehaviour
 		var agent = GetComponentInParent<NavMeshAgent>();
 		if (agent)
 		{
-			transform.RotateAround(Vector3.up, agent.velocity.magnitude * Scaler * Time.deltaTime);
+			transform.Rotate(Vector3.up, agent.velocity.magnitude * Scaler * Time.deltaTime);
 		}
 	}
 }
