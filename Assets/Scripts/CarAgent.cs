@@ -464,6 +464,21 @@ public class CarAgent : MonoBehaviour
                     game.runSimulation = false;
                 }
             }
+            
+            if (!game.runSimulation)
+            {
+                foreach (var particleSystem in agent.GetComponentsInChildren<ParticleSystem>())
+                {
+                    particleSystem.Pause();
+                }
+            }
+            else
+            {
+                foreach (var particleSystem in agent.GetComponentsInChildren<ParticleSystem>())
+                {
+                    particleSystem.Play();
+                }
+            }
         }
         else if (updateAgent)
         {

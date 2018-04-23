@@ -13,6 +13,8 @@ public class CheckpointMeta : MonoBehaviour
 
 	private string baseText;
 
+	public int offset;
+
 	private void Start()
 	{
 		text = GetComponent<Text>();
@@ -21,7 +23,13 @@ public class CheckpointMeta : MonoBehaviour
 
 	void Update ()
 	{
-		var gameCheckPoint = game.checkPoints[player.checkPoint];
+		var checkpt = player.checkPoint + offset;
+		if (checkpt < 0)
+		{
+			checkpt = checkpt + game.checkPoints.Length;
+		}
+		
+		var gameCheckPoint = game.checkPoints[checkpt];
 		var center = gameCheckPoint.GetComponentInChildren<Renderer>().bounds.center;
 
 		text.gameObject.transform.position = center + Vector3.up * HeightOffset;
