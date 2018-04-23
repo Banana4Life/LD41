@@ -11,6 +11,8 @@ public class Game : MonoBehaviour
 	public bool testing;
 	public bool drawPaths;
 
+	public PointMode SelectedPointMode = PointMode.SUSTAIN;
+
 	public int StartCheckpoint;
 	
 	public float knockBack = 30;
@@ -20,7 +22,7 @@ public class Game : MonoBehaviour
 
 	public GameObject[] checkPoints;
 	
-	public LinkedList<Pair<Vector3, bool>> queued = new LinkedList<Pair<Vector3, bool>>();
+	public LinkedList<Waypoint> queued = new LinkedList<Waypoint>();
 
 
 	public Vector3 camOffset1 = new Vector3(0,5,-4);
