@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(AudioSource))]
 public class CarAgent : MonoBehaviour
 {
     public GameObject GameObj;
@@ -34,6 +34,7 @@ public class CarAgent : MonoBehaviour
 
     private HashSet<GameObject> colliders = new HashSet<GameObject>();
 
+    private AudioSource audioSource;
     public AudioClip CheckpointPass;
     public AudioClip ClickSuccess;
     public AudioClip ClickDeny;
@@ -45,6 +46,7 @@ public class CarAgent : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         game = GameObj.GetComponent<Game>();
+        audioSource = GetComponent<AudioSource>();
         targetPoint = transform.position;
     }
 
@@ -192,6 +194,11 @@ public class CarAgent : MonoBehaviour
                         {
                             Debug.LogWarning("Path cost: " + total);
                             game.queued.RemoveLast();
+                            OnClick();
+                        }
+                        else
+                        {
+                            OnClickDeny();
                         }
                     }
                 }
@@ -430,6 +437,10 @@ public class CarAgent : MonoBehaviour
                     }
                 }
                 NextCheckpoint();
+                if (CompareTag("Player"))
+                {
+                    OnCheckpointPass();
+                }
             }
 
             if (other.CompareTag("Pickup"))
@@ -439,11 +450,7 @@ public class CarAgent : MonoBehaviour
                 agent.acceleration = 55f;
                 overDrive = 5f;
                 if (CompareTag("Player")) {
-                    var sound = other.GetComponent<AudioSource>();
-                    if (sound)
-                    {
-                        sound.Play();
-                    }
+                    OnPickup();
                 }
             }
         }
@@ -452,11 +459,7 @@ public class CarAgent : MonoBehaviour
 
     private void CollideOnce(CarAgent other)
     {
-        var collisionSound = other.GetComponent<AudioSource>();
-        if (collisionSound)
-        {
-            collisionSound.Play();
-        }
+        OnPlayerCollision();
     }
 
     void pause()
@@ -645,22 +648,27 @@ public class CarAgent : MonoBehaviour
 
     void OnClick()
     {
-        
+        audioSource.PlayOneShot(ClickSuccess);
+    }
+
+    void OnClickDeny()
+    {
+        audioSource.PlayOneShot(ClickDeny);
     }
 
     void OnCheckpointPass()
     {
-        
+        audioSource.PlayOneShot(CheckpointPass);
     }
 
     void OnPickup()
     {
-        
+        audioSource.PlayOneShot(Pickup);
     }
 
     void OnPlayerCollision()
     {
-        
+        audioSource.PlayOneShot(PlayerCollision);
     }
     
 }
