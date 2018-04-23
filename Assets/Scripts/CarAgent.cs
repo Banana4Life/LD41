@@ -122,8 +122,9 @@ public class CarAgent : MonoBehaviour
 
             var target = -dir + min;
 
+            //Camera.main.transform.LookAt(target);
 
-            ufoController.SetTarget(min, Quaternion.LookRotation(target - ufoController.transform.position));
+            ufoController.SetTarget(min, Quaternion.LookRotation(-dir));
 //            Camera.main.transform.parent.transform.position = min;
 //            Camera.main.transform.parent.transform.rotation = Quaternion.LookRotation(target - ufoController.transform.position);
         }

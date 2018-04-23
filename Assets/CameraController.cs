@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,8 +8,11 @@ public class CameraController : MonoBehaviour
 	public float LerpDuration = 5;
 
 	private bool previousPlanningState;
-	private Vector3 targetEulerAngles;
 	private Vector3 targetPosition;
+	private Quaternion targetRotation;
+
+	private Vector3 startPos;
+	private Quaternion startRot;
 
 	private float lerpBegin = -1;
 	
@@ -21,30 +22,32 @@ public class CameraController : MonoBehaviour
 		if (Planning)
 		{
 			targetPosition = Game.camOffset2;
-			targetEulerAngles = Game.camRot2;
+			targetRotation = Quaternion.Euler(Game.camRot2);
 		}
 		else
 		{
 			targetPosition = Game.camOffset1;
-			targetEulerAngles = Game.camRot1;
+			targetRotation = Quaternion.Euler(Game.camRot1);
 		}
 
 		if (previousPlanningState != Planning)
 		{
 			previousPlanningState = Planning;
-			lerpBegin = Time.time;	
+			lerpBegin = Time.time;
+			startPos = transform.localPosition;
+			startRot = transform.localRotation;
 		}
 
 		var progess = (Time.time - lerpBegin) / LerpDuration;
 		if (progess >= 1)
 		{
 			transform.localPosition = targetPosition;
-			transform.localEulerAngles = targetEulerAngles;
+			transform.localRotation = targetRotation;
 		}
 		else
 		{
-			transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, progess);			
-			transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(targetEulerAngles), progess);			
+			transform.localPosition = Vector3.Lerp(startPos, targetPosition, progess);			
+			transform.localRotation = Quaternion.Lerp(startRot, targetRotation, progess);			
 		}
 	}
 }

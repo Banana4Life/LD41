@@ -2419,6 +2419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f2c61c4387d4245b3efa4611d1292e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetPosition: {x: 0, y: 0, z: 0}
+  TargetRotation: {x: 0, y: 0, z: 0, w: 0}
+  LerpDuration: 0.4
 --- !u!1 &1017305407
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,7 +3254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Game: {fileID: 461391269}
   Planning: 0
-  LerpDuration: 3
+  LerpDuration: 0.3
 --- !u!1 &1463164648
 GameObject:
   m_ObjectHideFlags: 0
